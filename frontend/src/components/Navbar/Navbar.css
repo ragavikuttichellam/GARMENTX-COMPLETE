@@ -1,0 +1,244 @@
+.navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid transparent;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+.navbar.scrolled {
+  border-bottom-color: var(--border-light);
+  box-shadow: var(--shadow-sm);
+}
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+  gap: 24px;
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.logo-icon {
+  width: 38px; height: 38px;
+  background: var(--brand-primary);
+  color: white;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; font-weight: 900;
+}
+.logo-x { color: var(--brand-primary); }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.nav-link {
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.nav-link:hover, .nav-link.active {
+  color: var(--brand-primary);
+  background: var(--brand-light);
+}
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nav-icon-btn {
+  width: 40px; height: 40px;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: var(--transition);
+  position: relative;
+}
+.nav-icon-btn:hover { background: var(--bg-light); color: var(--brand-primary); }
+.cart-btn { position: relative; }
+.cart-badge {
+  position: absolute;
+  top: -2px; right: -2px;
+  width: 18px; height: 18px;
+  background: var(--brand-primary);
+  color: white;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid white;
+}
+.login-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  background: var(--brand-primary);
+  color: white;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: var(--transition);
+}
+.login-btn:hover { background: #a00d25; transform: translateY(-1px); }
+.user-menu { position: relative; }
+.user-btn {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 14px;
+  border: 1px solid var(--border-light);
+  border-radius: 50px;
+  background: white;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 14px;
+  font-weight: 500;
+}
+.user-btn:hover { border-color: var(--brand-primary); }
+.user-avatar {
+  width: 28px; height: 28px;
+  background: var(--brand-primary);
+  color: white;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+}
+.user-name { max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.user-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: white;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  min-width: 180px;
+  overflow: hidden;
+  animation: fadeInUp 0.2s ease;
+}
+.dropdown-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 18px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  transition: var(--transition);
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+.dropdown-item:hover { background: var(--bg-light); color: var(--text-primary); }
+.dropdown-item.logout:hover { color: var(--brand-primary); }
+.hamburger {
+  display: none;
+  width: 40px; height: 40px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  align-items: center; justify-content: center;
+  cursor: pointer;
+  color: var(--text-primary);
+}
+/* Search bar */
+.search-bar {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, border 0.3s;
+  border-top: 0px solid transparent;
+  background: white;
+}
+.search-bar.open {
+  max-height: 80px;
+  border-top: 1px solid var(--border-light);
+}
+.search-form {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0;
+  position: relative;
+}
+.search-icon { color: var(--text-muted); flex-shrink: 0; }
+.search-form input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text-primary);
+  background: transparent;
+}
+.search-form input::placeholder { color: var(--text-muted); }
+.search-submit {
+  padding: 8px 20px;
+  background: var(--brand-primary);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.search-submit:hover { background: #a00d25; }
+.search-close {
+  width: 36px; height: 36px;
+  background: var(--bg-light);
+  border: none;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  color: var(--text-secondary);
+}
+/* Mobile menu */
+.mobile-menu {
+  display: none;
+  flex-direction: column;
+  padding: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  background: white;
+  border-top: 1px solid var(--border-light);
+}
+.mobile-menu.open { max-height: 500px; }
+.mobile-link {
+  padding: 16px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-light);
+  transition: var(--transition);
+}
+.mobile-link:hover { color: var(--brand-primary); background: var(--brand-light); }
+.mobile-link.register-link { color: var(--brand-primary); font-weight: 600; }
+@media (max-width: 1024px) {
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .mobile-menu { display: flex; }
+  .user-name { display: none; }
+}
+@media (max-width: 480px) {
+  .navbar-inner { height: 64px; }
+  .nav-logo span { font-size: 18px; }
+}

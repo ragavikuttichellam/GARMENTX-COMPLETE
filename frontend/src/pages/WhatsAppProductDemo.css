@@ -1,0 +1,405 @@
+/* WhatsApp Product Demo Page Styles */
+
+.whatsapp-product-demo {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #fafbfc 100%);
+  padding: 60px 20px 40px;
+}
+
+.whatsapp-product-demo__container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header */
+.whatsapp-product-demo__header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.whatsapp-product-demo__header h1 {
+  font-family: "Playfair Display", serif;
+  font-size: 42px;
+  color: #1a1a2e;
+  margin: 0 0 12px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.whatsapp-product-demo__header p {
+  font-size: 16px;
+  color: #6b7280;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Section */
+.whatsapp-product-demo__section {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  margin-bottom: 32px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+}
+
+.whatsapp-product-demo__section-title {
+  font-family: "Playfair Display", serif;
+  font-size: 28px;
+  color: #1a1a2e;
+  margin: 0 0 28px;
+  font-weight: 700;
+}
+
+/* Product Grid */
+.whatsapp-product-demo__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: flex-start;
+}
+
+/* Product Image */
+.whatsapp-product-demo__image-container {
+  position: relative;
+}
+
+.whatsapp-product-demo__image {
+  aspect-ratio: 1;
+  background: #f3f4f6;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+}
+
+.whatsapp-product-demo__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Badges */
+.whatsapp-product-demo__badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: linear-gradient(135deg, #c8102e 0%, #e31837 100%);
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 13px;
+  box-shadow: 0 4px 12px rgba(200, 16, 46, 0.3);
+}
+
+.whatsapp-product-demo__badge-text {
+  display: block;
+  letter-spacing: 0.5px;
+}
+
+.whatsapp-product-demo__stock-badge {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  background: white;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.whatsapp-product-demo__stock-badge.in-stock {
+  color: #10b981;
+  background: #f0fdf4;
+}
+
+.whatsapp-product-demo__stock-badge.out-of-stock {
+  color: #ef4444;
+  background: #fef2f2;
+}
+
+/* Product Details */
+.whatsapp-product-demo__details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.whatsapp-product-demo__brand {
+  color: #9ca3af;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.whatsapp-product-demo__title {
+  font-family: "Playfair Display", serif;
+  font-size: 32px;
+  color: #1a1a2e;
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* Rating */
+.whatsapp-product-demo__rating {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.whatsapp-product-demo__stars {
+  display: flex;
+  gap: 2px;
+  font-size: 16px;
+}
+
+.whatsapp-product-demo__stars span {
+  color: #d1d5db;
+}
+
+.whatsapp-product-demo__stars span.filled {
+  color: #fbbf24;
+}
+
+.whatsapp-product-demo__reviews {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* Price */
+.whatsapp-product-demo__price {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.whatsapp-product-demo__current-price {
+  font-size: 36px;
+  font-weight: 800;
+  color: #c8102e;
+}
+
+.whatsapp-product-demo__original-price {
+  font-size: 18px;
+  color: #9ca3af;
+  text-decoration: line-through;
+}
+
+/* Description */
+.whatsapp-product-demo__description {
+  color: #6b7280;
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Features */
+.whatsapp-product-demo__features {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.whatsapp-product-demo__feature {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #374151;
+  font-size: 14px;
+}
+
+.whatsapp-product-demo__feature svg {
+  color: #10b981;
+  flex-shrink: 0;
+}
+
+/* Buttons Section */
+.whatsapp-product-demo__buttons-section {
+  margin-top: 32px;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 24px;
+}
+
+.whatsapp-product-demo__button-group {
+  margin-bottom: 20px;
+}
+
+.whatsapp-product-demo__button-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Info Box */
+.whatsapp-product-demo__info-box {
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+  border-left: 4px solid #25d366;
+}
+
+.whatsapp-product-demo__info-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #374151;
+  font-size: 14px;
+}
+
+.whatsapp-product-demo__info-icon {
+  font-size: 18px;
+}
+
+/* Benefits Grid */
+.whatsapp-product-demo__benefits {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.whatsapp-product-demo__benefit-card {
+  background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid #e5e7eb;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.whatsapp-product-demo__benefit-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  border-color: #25d366;
+}
+
+.whatsapp-product-demo__benefit-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.whatsapp-product-demo__benefit-card h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin: 0 0 8px;
+}
+
+.whatsapp-product-demo__benefit-card p {
+  color: #6b7280;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Code Block */
+.whatsapp-product-demo__code-block {
+  background: #1f2937;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.whatsapp-product-demo__code-block pre {
+  padding: 20px;
+  overflow-x: auto;
+  color: #10b981;
+  font-family: "Courier New", monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.whatsapp-product-demo__code-block pre::-webkit-scrollbar {
+  height: 6px;
+}
+
+.whatsapp-product-demo__code-block pre::-webkit-scrollbar-track {
+  background: #111827;
+}
+
+.whatsapp-product-demo__code-block pre::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 3px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .whatsapp-product-demo__grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .whatsapp-product-demo__section {
+    padding: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .whatsapp-product-demo {
+    padding: 40px 16px 24px;
+  }
+
+  .whatsapp-product-demo__header h1 {
+    font-size: 28px;
+  }
+
+  .whatsapp-product-demo__section-title {
+    font-size: 22px;
+  }
+
+  .whatsapp-product-demo__title {
+    font-size: 24px;
+  }
+
+  .whatsapp-product-demo__section {
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+
+  .whatsapp-product-demo__benefits {
+    grid-template-columns: 1fr;
+  }
+
+  .whatsapp-product-demo__info-box {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .whatsapp-product-demo__header h1 {
+    font-size: 22px;
+  }
+
+  .whatsapp-product-demo__section-title {
+    font-size: 18px;
+  }
+
+  .whatsapp-product-demo__title {
+    font-size: 20px;
+  }
+
+  .whatsapp-product-demo__current-price {
+    font-size: 28px;
+  }
+
+  .whatsapp-product-demo__button-group {
+    margin-bottom: 14px;
+  }
+
+  .whatsapp-product-demo__code-block pre {
+    font-size: 11px;
+    padding: 14px;
+  }
+}

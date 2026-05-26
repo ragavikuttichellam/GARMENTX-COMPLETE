@@ -34,10 +34,30 @@ exports.createOrder = async (req, res) => {
   }
 };
 
+// ─── USER ORDER APIs ───────────────────────────────────────────────────────────
+
 exports.getMyOrders = async (req, res) => {
   try {
-    const orders = await Order.find({ user: req.user._id }).sort({ createdAt: -1 }).populate('orderItems.product', 'name images');
-    res.json({ success: true, orders });
+    const orders = await Order.find({ user: req.user._id })
+      .sort({ createdAt: -1 })
+      .select('_id orderNumber status createdAt totalPrice orderItems shippingAddress isDelivered deliveredAt isPaid')
+      .populate('orderItems.product', 'name images');
+    
+    // Return only user-visible data
+    const userOrders = orders.map(order => ({
+      _id: order._id,
+      orderNumber: order.orderNumber,
+      status: order.status,
+      createdAt: order.createdAt,
+      totalPrice: order.totalPrice,
+      orderItems: order.orderItems,
+      isDelivered: order.isDelivered,
+      deliveredAt: order.deliveredAt,
+      isPaid: order.isPaid,
+      shippingAddress: order.shippingAddress
+    }));
+
+    res.json({ success: true, orders: userOrders });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
@@ -45,18 +65,57 @@ exports.getMyOrders = async (req, res) => {
 
 exports.getOrder = async (req, res) => {
   try {
-    const order = await Order.findOne({ _id: req.params.id, user: req.user._id }).populate('orderItems.product');
+    const order = await Order.findOne({ _id: req.params.id, user: req.user._id })
+      .select('_id orderNumber status createdAt totalPrice orderItems shippingAddress isDelivered deliveredAt isPaid')
+      .populate('orderItems.product');
+    
     if (!order) return res.status(404).json({ success: false, message: 'Order not found' });
-    res.json({ success: true, order });
+    
+    // Return only user-visible data
+    const userOrder = {
+      _id: order._id,
+      orderNumber: order.orderNumber,
+      status: order.status,
+      createdAt: order.createdAt,
+      totalPrice: order.totalPrice,
+      orderItems: order.orderItems,
+      shippingAddress: order.shippingAddress,
+      isDelivered: order.isDelivered,
+      deliveredAt: order.deliveredAt,
+      isPaid: order.isPaid
+    };
+
+    res.json({ success: true, order: userOrder });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
 };
 
+// ─── ADMIN ORDER APIs ──────────────────────────────────────────────────────────
+
 exports.getAllOrders = async (req, res) => {
   try {
-    const orders = await Order.find({}).sort({ createdAt: -1 }).populate('user', 'name email').populate('orderItems.product', 'name');
+    const orders = await Order.find({})
+      .sort({ createdAt: -1 })
+      .populate('user', 'name email phone')
+      .populate('orderItems.product', 'name');
+    
     res.json({ success: true, orders });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+exports.getAdminOrderDetail = async (req, res) => {
+  try {
+    const order = await Order.findById(req.params.id)
+      .populate('user', 'name email phone')
+      .populate('orderItems.product');
+    
+    if (!order) return res.status(404).json({ success: false, message: 'Order not found' });
+    
+    // Return full order data for admin
+    res.json({ success: true, order });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
@@ -65,7 +124,15 @@ exports.getAllOrders = async (req, res) => {
 exports.updateOrderStatus = async (req, res) => {
   try {
     const { status } = req.body;
-    const order = await Order.findByIdAndUpdate(req.params.id, { status, ...(status === 'delivered' && { isDelivered: true, deliveredAt: Date.now() }) }, { new: true });
+    const order = await Order.findByIdAndUpdate(
+      req.params.id,
+      { 
+        status, 
+        ...(status === 'delivered' && { isDelivered: true, deliveredAt: Date.now() }) 
+      },
+      { new: true }
+    );
+    
     if (!order) return res.status(404).json({ success: false, message: 'Order not found' });
     res.json({ success: true, message: 'Order status updated!', order });
   } catch (err) {

@@ -54,9 +54,10 @@ export const productAPI = {
 // ─── Orders ───────────────────────────────────────────────────────────────────
 export const orderAPI = {
   create:    (data)       => api.post('/orders', data),
-  getMyOrders: ()         => api.get('/orders/my-orders'),
+  getMyOrders: ()         => api.get('/orders/myorders'),
   getById:   (id)         => api.get(`/orders/${id}`),
   markPaid:  (id, data)   => api.put(`/orders/${id}/pay`, data),
+  updateStatus: (id, data) => api.put(`/orders/${id}/status`, data),
 };
 
 // ─── Payment ──────────────────────────────────────────────────────────────────
@@ -72,9 +73,10 @@ export const adminAPI = {
   createProduct:      (data)      => api.post('/admin/products', data),
   updateProduct:      (id, data)  => api.put(`/admin/products/${id}`, data),
   deleteProduct:      (id)        => api.delete(`/admin/products/${id}`),
-  getAllOrders:        (params)    => api.get('/admin/orders', { params }),
-  updateOrderStatus:  (id, data)  => api.put(`/admin/orders/${id}/status`, data),
-  getAllUsers:         ()          => api.get('/admin/users'),
+  getAllOrders:       (params)    => api.get('/orders/admin/all', { params }),
+  getOrderDetail:     (id)        => api.get(`/orders/admin/${id}`),
+  updateOrderStatus:  (id, data)  => api.put(`/orders/${id}/status`, data),
+  getAllUsers:        ()          => api.get('/admin/users'),
 };
 
 export default api;

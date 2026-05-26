@@ -15,6 +15,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import AdminPanel from './pages/AdminPanel';
 import MyOrders from './pages/MyOrders';
+import OrderDetailUser from './pages/OrderDetailUser';
+import AdminOrderDetail from './pages/AdminOrderDetail';
 import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
 
@@ -27,6 +29,7 @@ function App() {
           <Navbar />
           <main>
             <Routes>
+              {/* PUBLIC ROUTES */}
               <Route path="/" element={<Home />} />
               <Route path="/shop" element={<Shop />} />
               <Route path="/men" element={<Shop category="men" />} />
@@ -38,10 +41,16 @@ function App() {
               <Route path="/cart" element={<CartPage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+
+              {/* USER PROTECTED ROUTES */}
               <Route path="/checkout" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
               <Route path="/order-success/:id" element={<ProtectedRoute><OrderSuccess /></ProtectedRoute>} />
               <Route path="/my-orders" element={<ProtectedRoute><MyOrders /></ProtectedRoute>} />
+              <Route path="/order/:id" element={<ProtectedRoute><OrderDetailUser /></ProtectedRoute>} />
+
+              {/* ADMIN PROTECTED ROUTES */}
               <Route path="/admin" element={<ProtectedRoute adminOnly><AdminPanel /></ProtectedRoute>} />
+              <Route path="/admin/orders/:id" element={<ProtectedRoute adminOnly><AdminOrderDetail /></ProtectedRoute>} />
             </Routes>
           </main>
           <Footer />

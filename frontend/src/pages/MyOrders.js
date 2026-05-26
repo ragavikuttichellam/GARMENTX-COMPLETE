@@ -13,6 +13,13 @@ const statusConfig = {
   cancelled:   { color: '#EF4444', bg: '#FEF2F2', icon: <FiXCircle size={14} />, label: 'Cancelled' },
 };
 
+/**
+ * User My Orders Page
+ * Shows only user-relevant order information:
+ * - Product image, name, quantity, price
+ * - Order status and delivery status
+ * - Does NOT show: invoice details, GST, barcode, payment details
+ */
 export default function MyOrders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);

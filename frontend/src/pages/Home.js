@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../utils/api';
 import { FiArrowRight, FiTruck, FiRefreshCw, FiShield, FiStar } from 'react-icons/fi';
 import ProductCard from '../components/ProductCard/ProductCard';
 import './Home.css';
@@ -28,8 +28,8 @@ export default function Home() {
     const fetchProducts = async () => {
       try {
         const [featRes, newRes] = await Promise.all([
-          axios.get('/api/products?featured=true&limit=4'),
-          axios.get('/api/products?newArrival=true&limit=4')
+          api.get('/products', { params: { featured: true, limit: 4 } }),
+          api.get('/products', { params: { newArrival: true, limit: 4 } })
         ]);
         setFeatured(featRes.data.products || []);
         setNewArrivals(newRes.data.products || []);
@@ -56,7 +56,7 @@ export default function Home() {
             <span className="hero-tag">✨ New Season 2025</span>
             <h1 className="hero-title">
               Upgrade Your Style<br />
-              with <span className="hero-brand">GarmentX</span>
+              with <span className="hero-brand">Manisara World</span>
             </h1>
             <p className="hero-subtitle">
               Discover premium fashion for men, women & kids. Curated collections that define your identity.

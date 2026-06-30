@@ -22,7 +22,7 @@ const Hero = () => {
           <span className="hero-eyebrow">New Collection 2025</span>
           <h1 className="hero-heading">
             Upgrade Your Style<br />
-            <em>with GarmentX</em>
+            <em>with Manisara World</em>
           </h1>
           <p className="hero-subtext">
             Curated fashion for Men, Women & Kids. Premium quality,
@@ -202,7 +202,7 @@ const WhyUs = () => {
     <section className="why-us section-gap">
       <div className="container">
         <div className="section-header">
-          <h2>Why Choose GarmentX?</h2>
+          <h2>Why Choose Manisara World?</h2>
           <div className="underline" />
         </div>
         <div className="features-grid">
@@ -225,7 +225,7 @@ const HomePage = () => {
   const [loading,  setLoading]  = useState(true);
 
   useEffect(() => {
-    document.title = 'GarmentX — Upgrade Your Style';
+    document.title = 'Manisara World | Premium Fashion Ecommerce';
     productAPI.getFeatured()
       .then(({ data }) => setFeatured(data.products))
       .catch(console.error)

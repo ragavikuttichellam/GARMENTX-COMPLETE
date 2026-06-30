@@ -187,7 +187,7 @@ export default function AdminPanel() {
                 Order {selectedOrder.orderNumber}
               </h2>
               <p style={{ fontSize: '12px', color: '#6B7280' }}>
-                {new Date(selectedOrder.createdAt).toLocaleDateString('en-IN')}
+                {new Date(selectedOrder.createdAt).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}
               </p>
             </div>
           )}

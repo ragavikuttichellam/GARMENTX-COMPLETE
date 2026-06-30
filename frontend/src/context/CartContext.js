@@ -24,7 +24,7 @@ const cartReducer = (state, action) => {
 };
 
 const loadCart = () => {
-  try { return JSON.parse(localStorage.getItem('garmentx_cart')) || []; }
+  try { return JSON.parse(localStorage.getItem('manisara_world_cart')) || []; }
   catch { return []; }
 };
 
@@ -32,7 +32,7 @@ export const CartProvider = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, { items: loadCart() });
 
   useEffect(() => {
-    localStorage.setItem('garmentx_cart', JSON.stringify(state.items));
+    localStorage.setItem('manisara_world_cart', JSON.stringify(state.items));
   }, [state.items]);
 
   const addToCart = (product, size, color, quantity = 1) => {

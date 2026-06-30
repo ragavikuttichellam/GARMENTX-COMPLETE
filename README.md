@@ -1,8 +1,8 @@
-# 🛍️ GarmentX — Full-Stack E-Commerce Platform
+# 🛍️ Manisara World — Full-Stack E-Commerce Platform
 
-> A production-ready MERN Stack garment e-commerce website with Razorpay payment integration, JWT authentication, Admin Panel, and complete Indian GST billing.
+> A production-ready MERN Stack Manisara World e-commerce website with Razorpay payment integration, JWT authentication, Admin Panel, and complete Indian GST billing.
 
-![GarmentX Banner](https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80)
+![Manisara World Banner](https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80)
 
 ---
 
@@ -28,7 +28,7 @@
 ## 🗂️ Project Structure
 
 ```
-garmentx/
+Manisara World/
 ├── backend/                    # Node.js + Express API
 │   ├── config/
 │   │   └── db.js

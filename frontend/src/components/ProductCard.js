@@ -22,7 +22,7 @@ const ProductCard = ({ product }) => {
   const price    = product.discountPrice > 0 ? product.discountPrice : product.price;
   const original = product.discountPrice > 0 ? product.price : null;
   const discount = original ? Math.round(((original - price) / original) * 100) : 0;
-  const image    = product.images?.[0]?.url || 'https://via.placeholder.com/400x500?text=GarmentX';
+  const image    = product.images?.[0]?.url || 'https://via.placeholder.com/400x500?text=Manisara World';
 
   const handleAddToCart = async (e) => {
     e.preventDefault();

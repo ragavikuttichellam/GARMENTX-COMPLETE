@@ -57,7 +57,7 @@ const HeroBanner = () => {
     setCurrent((prev) => (prev + 1) % banners.length);
   };
 
-  const localVideo = '/videos/Garment_shop.mp4';
+  const localVideo = '/videos/Manisara_World_shop.mp4';
 
   return (
     <div className="hero-banner-container">

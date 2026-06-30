@@ -91,6 +91,39 @@ exports.getOrder = async (req, res) => {
   }
 };
 
+exports.cancelOrder = async (req, res) => {
+  try {
+    const order = await Order.findOne({ _id: req.params.id, user: req.user._id });
+
+    if (!order) return res.status(404).json({ success: false, message: 'Order not found' });
+
+    if (order.status === 'cancelled') {
+      return res.status(400).json({ success: false, message: 'Order is already cancelled' });
+    }
+
+    if (['shipped', 'delivered'].includes(order.status)) {
+      return res.status(400).json({ success: false, message: 'Order cannot be cancelled after it has shipped' });
+    }
+
+    for (const item of order.orderItems) {
+      await Product.findByIdAndUpdate(item.product, { $inc: { stock: item.quantity } });
+    }
+
+    order.status = 'cancelled';
+    order.isDelivered = false;
+    order.deliveredAt = undefined;
+    await order.save();
+
+    const cancelledOrder = await Order.findById(order._id)
+      .select('_id orderNumber status createdAt totalPrice orderItems shippingAddress isDelivered deliveredAt isPaid')
+      .populate('orderItems.product');
+
+    res.json({ success: true, message: 'Order cancelled successfully', order: cancelledOrder });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
 // ─── ADMIN ORDER APIs ──────────────────────────────────────────────────────────
 
 exports.getAllOrders = async (req, res) => {
@@ -98,7 +131,7 @@ exports.getAllOrders = async (req, res) => {
     const orders = await Order.find({})
       .sort({ createdAt: -1 })
       .populate('user', 'name email phone')
-      .populate('orderItems.product', 'name');
+      .populate('orderItems.product', 'name images image price');
     
     res.json({ success: true, orders });
   } catch (err) {
@@ -110,7 +143,7 @@ exports.getAdminOrderDetail = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id)
       .populate('user', 'name email phone')
-      .populate('orderItems.product');
+      .populate('orderItems.product', 'name images image price description category brand');
     
     if (!order) return res.status(404).json({ success: false, message: 'Order not found' });
     

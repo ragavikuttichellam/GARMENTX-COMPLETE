@@ -1,7 +1,12 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const JWT_SECRET = process.env.JWT_SECRET;
 
-const generateToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET || 'fallback_secret_dev', { expiresIn: process.env.JWT_EXPIRE || '7d' });
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is required');
+}
+
+const generateToken = (id) => jwt.sign({ id }, JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE || '7d' });
 
 exports.loginAdmin = async (req, res) => {
   try {

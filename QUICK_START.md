@@ -1,4 +1,4 @@
-# 🚀 GarmentX - Quick Start Guide & Docker Setup
+# 🚀 Manisara World - Quick Start Guide & Docker Setup
 
 ## ⚡ Get Started in 5 Minutes
 
@@ -11,7 +11,7 @@
 #### Steps
 ```bash
 # 1. Navigate to project root
-cd garmentx
+cd Manisara World
 
 # 2. Start everything with Docker
 docker-compose up
@@ -52,7 +52,7 @@ npm start
 
 ```bash
 # Database
-MONGODB_URI=mongodb://admin:password123@localhost:27017/garmentx
+MONGODB_URI=mongodb://admin:password123@localhost:27017/Manisara World
 
 # Server
 PORT=5000
@@ -121,7 +121,7 @@ Password: Demo@123
 
 ### Admin Access
 ```
-Email: admin@garmentx.com
+Email: admin@manisaraworld.com
 Password: (set during setup)
 ```
 
@@ -137,7 +137,7 @@ CVV: Any 3 digits
 ## 📂 Project Structure
 
 ```
-garmentx/
+Manisara World/
 ├── backend/                    # Node.js + Express server
 │   ├── controllers/           # Business logic
 │   ├── models/               # MongoDB schemas
@@ -518,7 +518,7 @@ npm start
 ## 📦 Project Structure
 
 ```
-garmentx/
+Manisara World/
 ├── backend/
 │   ├── controllers/
 │   │   ├── orderController.js ✅

@@ -4,7 +4,7 @@
 
 ### User's "My Orders" Page Showed (❌ WRONG)
 ```
-Order #GX1234567890  |  Status: Shipped  |  ₹2,999
+Order #MW1234567890  |  Status: Shipped  |  ₹2,999
 
 Product: T-Shirt | Qty: 2 | Price: ₹2,000
 
@@ -46,7 +46,7 @@ exports.getMyOrders = async (req, res) => {
 
 ### User's "My Orders" Page Shows (✅ CORRECT)
 ```
-Order #GX1234567890  |  Status: Shipped  |  ₹2,999
+Order #MW1234567890  |  Status: Shipped  |  ₹2,999
 
 Product: T-Shirt | Qty: 2 | Price: ₹2,000
 
@@ -58,7 +58,7 @@ Delivery Status: ⏳ Pending
 
 ### Admin's "Order Operations" Shows (✅ COMPLETE)
 ```
-Order #GX1234567890  |  Status: Shipped  |  ₹2,999
+Order #MW1234567890  |  Status: Shipped  |  ₹2,999
 
 Customer: John Doe | john@example.com | 9876543210
 

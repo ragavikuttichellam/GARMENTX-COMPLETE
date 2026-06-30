@@ -66,8 +66,8 @@ const Navbar = () => {
 
         {/* Logo */}
         <Link to="/" className="navbar-logo" onClick={() => setMenuOpen(false)}>
-          <span className="logo-icon">GX</span>
-          <span className="logo-text">GarmentX</span>
+          <span className="logo-icon">MW</span>
+          <span className="logo-text">Manisara World</span>
         </Link>
 
         {/* Desktop Nav */}

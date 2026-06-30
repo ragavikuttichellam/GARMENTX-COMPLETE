@@ -1,8 +1,8 @@
-# GarmentX - Complete MERN Ecommerce Platform
+# Manisara World - Complete MERN Ecommerce Platform
 ## Professional Implementation Guide
 
 ### Project Overview
-GarmentX is a production-ready MERN stack ecommerce platform with luxury brand positioning, advanced business features, and modern UI/UX.
+Manisara World is a production-ready MERN stack ecommerce platform with luxury brand positioning, advanced business features, and modern UI/UX.
 
 ### Tech Stack
 - **Frontend**: React 18, Tailwind CSS, React Router, Axios, React Hot Toast
@@ -33,7 +33,7 @@ npm install
 
 2. **Environment Variables** (.env file)
 ```
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/garmentx
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/Manisara World
 JWT_SECRET=your_jwt_secret_key_here
 PORT=5000
 FRONTEND_URL=http://localhost:3000
@@ -51,9 +51,9 @@ SMTP_PORT=587
 SMTP_USER=your_email@gmail.com
 SMTP_PASS=your_app_password
 
-ADMIN_EMAIL=admin@garmentx.com
+ADMIN_EMAIL=admin@manisaraworld.com
 ADMIN_PHONE=+919876543210
-COMPANY_NAME=GarmentX
+COMPANY_NAME=Manisara World
 ```
 
 3. **Start Backend**
@@ -222,7 +222,7 @@ COMPANY_NAME=
 
 1. **Create Heroku App**
 ```bash
-heroku create garmentx-backend
+heroku create manisara-world-backend
 ```
 
 2. **Set Environment Variables**
@@ -272,7 +272,7 @@ vercel --prod
 - [ ] Barcode scanning
 
 ### Test Credentials
-- **Email**: demo@garmentx.com
+- **Email**: demo@manisaraworld.com
 - **Password**: Demo@123
 
 ### Razorpay Test Cards
@@ -376,7 +376,7 @@ vercel --prod
 ---
 
 ## License
-© 2024 GarmentX. All rights reserved.
+© 2024 Manisara World. All rights reserved.
 
 ---
 

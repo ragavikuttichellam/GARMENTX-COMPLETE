@@ -32,7 +32,6 @@ const CheckoutPage = () => {
   useEffect(() => {
     loadCart();
     loadUser();
-    loadAddresses();
   }, []);
 
   const loadCart = () => {
@@ -49,28 +48,31 @@ const CheckoutPage = () => {
 
   const loadUser = async () => {
     try {
-      const token = localStorage.getItem('token');
-      if (token) {
-        const res = await api.get('/auth/me');
-        setUser(res.data);
+      const res = await api.get('/auth/profile');
+      const userData = res.data.user;
+      setUser(userData);
+
+      const addressList = [];
+      if (userData.address && Object.keys(userData.address).length > 0) {
+        const addressObj = {
+          _id: 'profile-address',
+          fullName: userData.name || '',
+          email: userData.email || '',
+          phone: userData.phone || '',
+          addressLine1: userData.address.street || '',
+          addressLine2: '',
+          city: userData.address.city || '',
+          state: userData.address.state || '',
+          pincode: userData.address.pincode || '',
+          country: userData.address.country || 'India',
+          isDefault: true
+        };
+        addressList.push(addressObj);
+        setSelectedAddress(addressObj._id);
       }
+      setAddresses(addressList);
     } catch (error) {
       console.error('Error loading user:', error);
-    }
-  };
-
-  const loadAddresses = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      if (token) {
-        const res = await api.get('/user/addresses');
-        setAddresses(res.data.addresses || []);
-        if (res.data.addresses && res.data.addresses.length > 0) {
-          setSelectedAddress(res.data.addresses[0]._id);
-        }
-      }
-    } catch (error) {
-      console.error('Error loading addresses:', error);
     }
   };
 
@@ -81,30 +83,26 @@ const CheckoutPage = () => {
       return;
     }
 
-    try {
-      setLoading(true);
-      const res = await api.post('/user/addresses', newAddress);
-      setAddresses([...addresses, res.data.address]);
-      setSelectedAddress(res.data.address._id);
-      setShowAddressForm(false);
-      setNewAddress({
-        fullName: '',
-        phone: '',
-        email: '',
-        addressLine1: '',
-        addressLine2: '',
-        city: '',
-        state: '',
-        pincode: '',
-        country: 'India',
-        isDefault: false
-      });
-      toast.success('Address added successfully');
-    } catch (error) {
-      toast.error(error.response?.data?.message || 'Error adding address');
-    } finally {
-      setLoading(false);
-    }
+    const address = {
+      ...newAddress,
+      _id: `local-address-${Date.now()}`
+    };
+    setAddresses([...addresses, address]);
+    setSelectedAddress(address._id);
+    setShowAddressForm(false);
+    setNewAddress({
+      fullName: '',
+      phone: '',
+      email: '',
+      addressLine1: '',
+      addressLine2: '',
+      city: '',
+      state: '',
+      pincode: '',
+      country: 'India',
+      isDefault: false
+    });
+    toast.success('Address added successfully');
   };
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -118,26 +116,47 @@ const CheckoutPage = () => {
       return;
     }
 
+    const selectedAddressObj = addresses.find((addr) => addr._id === selectedAddress);
+    if (!selectedAddressObj) {
+      toast.error('Please select a delivery address');
+      return;
+    }
+
+    const orderItems = cartItems.map((item) => ({
+      product: item.product || item.productId || item._id || item.id,
+      quantity: item.quantity,
+      size: item.size,
+      color: item.color
+    }));
+
+    const shippingAddress = {
+      fullName: selectedAddressObj.fullName,
+      email: selectedAddressObj.email,
+      phone: selectedAddressObj.phone,
+      addressLine1: selectedAddressObj.addressLine1,
+      addressLine2: selectedAddressObj.addressLine2,
+      city: selectedAddressObj.city,
+      state: selectedAddressObj.state,
+      pincode: selectedAddressObj.pincode,
+      country: selectedAddressObj.country
+    };
+
+    const orderData = {
+      orderItems,
+      shippingAddress,
+      paymentMethod,
+      notes: orderNotes
+    };
+
     try {
       setLoading(true);
 
-      const orderData = {
-        items: cartItems,
-        address: selectedAddress,
-        paymentMethod,
-        notes: orderNotes,
-        subtotal,
-        shipping,
-        tax,
-        total
-      };
-
       if (paymentMethod === 'razorpay') {
-        handleRazorpayPayment(orderData);
+        await handleRazorpayPayment(orderData);
       } else if (paymentMethod === 'cod') {
-        createOrder(orderData);
+        await createOrder(orderData);
       } else if (paymentMethod === 'upi') {
-        handleUPIPayment(orderData);
+        await handleUPIPayment(orderData);
       }
     } catch (error) {
       toast.error('Error processing order');
@@ -148,25 +167,28 @@ const CheckoutPage = () => {
 
   const handleRazorpayPayment = async (orderData) => {
     try {
-      // Create order in backend first
-      const orderRes = await api.post('/orders/create', orderData);
-      const order = orderRes.data;
+      const orderRes = await api.post('/orders', orderData);
+      const order = orderRes.data.order || orderRes.data;
 
-      // Initialize Razorpay
+      const keyRes = await api.get('/payment/key');
+      const paymentRes = await api.post('/payment/razorpay', { orderId: order._id });
+      const razorpayOrder = paymentRes.data.razorpayOrder;
+      const razorpayKey = keyRes.data.key || process.env.REACT_APP_RAZORPAY_KEY_ID || 'rzp_test_1234567890';
+
       const options = {
-        key: process.env.REACT_APP_RAZORPAY_KEY_ID || 'rzp_test_1234567890',
-        amount: total * 100,
-        currency: 'INR',
-        name: 'GarmentX',
+        key: razorpayKey,
+        amount: razorpayOrder.amount,
+        currency: razorpayOrder.currency,
+        name: 'Manisara World',
         description: `Order #${order._id}`,
-        order_id: order.razorpayOrderId,
+        order_id: razorpayOrder.id,
         handler: async (response) => {
           try {
-            const verifyRes = await api.post('/payments/verify-razorpay', {
+            const verifyRes = await api.post('/payment/verify', {
               orderId: order._id,
-              razorpayPaymentId: response.razorpay_payment_id,
-              razorpayOrderId: response.razorpay_order_id,
-              razorpaySignature: response.razorpay_signature
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature
             });
 
             if (verifyRes.data.success) {
@@ -194,10 +216,10 @@ const CheckoutPage = () => {
 
   const handleUPIPayment = async (orderData) => {
     try {
-      const orderRes = await api.post('/orders/create', orderData);
-      const order = orderRes.data;
+      const orderRes = await api.post('/orders', orderData);
+      const order = orderRes.data.order || orderRes.data;
 
-      const upiUrl = `upi://pay?pa=merchant@upi&pn=GarmentX&am=${total}&tn=Order%20${order._id}`;
+      const upiUrl = `upi://pay?pa=merchant@upi&pn=Manisara World&am=${total}&tn=Order%20${order._id}`;
       window.location.href = upiUrl;
 
       setTimeout(() => {
@@ -210,9 +232,10 @@ const CheckoutPage = () => {
 
   const createOrder = async (orderData) => {
     try {
-      const res = await api.post('/orders/create', orderData);
+      const res = await api.post('/orders', orderData);
+      const order = res.data.order || res.data;
       localStorage.removeItem('cart');
-      navigate(`/payment-success/${res.data._id}`);
+      navigate(`/payment-success/${order._id}`);
       toast.success('Order placed successfully!');
     } catch (error) {
       toast.error('Error creating order');

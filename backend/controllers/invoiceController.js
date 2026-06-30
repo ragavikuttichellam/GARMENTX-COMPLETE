@@ -15,9 +15,9 @@ exports.getInvoice = async (req, res) => {
 
     const pdfBuffer = await createInvoicePDF(order, {
       logoPath: process.env.INVOICE_LOGO_PATH,
-      companyName: process.env.COMPANY_NAME || 'GarmentX Pvt Ltd',
+      companyName: process.env.COMPANY_NAME || 'Manisara World Pvt Ltd',
       companyAddress: process.env.COMPANY_ADDRESS || '123 Fashion Street, Mumbai',
-      footerMessage: process.env.INVOICE_FOOTER || 'Thank you for shopping with GarmentX!'
+      footerMessage: process.env.INVOICE_FOOTER || 'Thank you for shopping with Manisara World!'
     });
 
     const inline = req.query.inline === 'true';

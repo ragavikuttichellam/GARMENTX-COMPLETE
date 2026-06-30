@@ -169,7 +169,7 @@ Response: {
   success: true,
   orders: [{
     _id: "...",
-    orderNumber: "GX1234567890",
+    orderNumber: "MW1234567890",
     status: "shipped",
     createdAt: "2024-05-26T...",
     totalPrice: 2999,
@@ -190,7 +190,7 @@ Response: {
   success: true,
   order: {
     _id: "...",
-    orderNumber: "GX1234567890",
+    orderNumber: "MW1234567890",
     status: "shipped",
     itemsPrice: 2000,
     gstAmount: 360,          // ← Only for admin

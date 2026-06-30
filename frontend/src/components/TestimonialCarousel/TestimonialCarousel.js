@@ -15,7 +15,7 @@ const TestimonialCarousel = () => {
       name: "Priya Sharma",
       role: "Fashion Enthusiast",
       rating: 5,
-      text: "GarmentX has the most beautiful and premium quality sarees! The delivery was fast and the customer service is amazing. Highly recommend!",
+      text: "Manisara World has the most beautiful and premium quality sarees! The delivery was fast and the customer service is amazing. Highly recommend!",
       image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80",
       verified: true
     },
@@ -24,7 +24,7 @@ const TestimonialCarousel = () => {
       name: "Anita Verma",
       role: "Regular Customer",
       rating: 5,
-      text: "I've been shopping at GarmentX for 6 months now. The quality of fabrics and designs is consistently excellent. Love the new collection!",
+      text: "I've been shopping at Manisara World for 6 months now. The quality of fabrics and designs is consistently excellent. Love the new collection!",
       image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80",
       verified: true
     },
@@ -74,7 +74,7 @@ const TestimonialCarousel = () => {
       <div className="container">
         <div className="section-header">
           <h2>Customer Love ❤️</h2>
-          <p>Join thousands of happy customers who trust GarmentX</p>
+          <p>Join thousands of happy customers who trust Manisara World</p>
         </div>
 
         <div className="testimonial-carousel">

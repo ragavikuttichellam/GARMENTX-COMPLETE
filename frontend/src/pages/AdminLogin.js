@@ -16,7 +16,7 @@ export default function AdminLogin() {
       // call admin auth endpoint which only issues token for admins
       const { data } = await authAPI.adminLogin({ email, password });
       if (!data.success) return toast.error(data.message || 'Login failed');
-      localStorage.setItem('garmentx_token', data.token);
+      localStorage.setItem('manisara_world_token', data.token);
       window.location.href = '/admin';
     } catch (err) {
       toast.error(err?.response?.data?.message || 'Login failed');

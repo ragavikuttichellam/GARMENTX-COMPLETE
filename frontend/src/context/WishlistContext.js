@@ -12,7 +12,7 @@ export const WishlistProvider = ({ children }) => {
 
   // Load from localStorage on mount
   useEffect(() => {
-    const savedWishlist = localStorage.getItem('garmentx_wishlist');
+    const savedWishlist = localStorage.getItem('manisara_world_wishlist');
     if (savedWishlist) {
       try {
         setWishlist(JSON.parse(savedWishlist));
@@ -24,7 +24,7 @@ export const WishlistProvider = ({ children }) => {
 
   // Save to localStorage whenever wishlist changes
   useEffect(() => {
-    localStorage.setItem('garmentx_wishlist', JSON.stringify(wishlist));
+    localStorage.setItem('manisara_world_wishlist', JSON.stringify(wishlist));
   }, [wishlist]);
 
   const addToWishlist = (product) => {

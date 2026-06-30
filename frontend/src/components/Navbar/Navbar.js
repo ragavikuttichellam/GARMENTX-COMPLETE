@@ -53,9 +53,9 @@ export default function Navbar() {
   return (
     <header className={'navbar' + (scrolled ? ' scrolled' : '')}>
       <div className="navbar-inner container">
-        <Link to="/" className="nav-logo">
-          <div className="logo-icon">G</div>
-          <span>Garment<span className="logo-x">X</span></span>
+        <Link to="/" className="nav-logo"><div className="logo-icon">MW</div>
+          <span>Manisara World<span className="logo-x"></span></span>
+          
         </Link>
         <nav className="nav-links">
           {navLinks.map(link => (

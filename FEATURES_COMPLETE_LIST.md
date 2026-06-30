@@ -1,8 +1,8 @@
-# GarmentX - Complete Feature List & Documentation
+# Manisara World - Complete Feature List & Documentation
 
 ## 🎯 PROJECT OVERVIEW
 
-**GarmentX** is a professional, production-ready MERN stack ecommerce platform designed for luxury fashion retail with advanced business features, modern UI/UX, and complete admin capabilities.
+**Manisara World** is a professional, production-ready MERN stack ecommerce platform designed for luxury fashion retail with advanced business features, modern UI/UX, and complete admin capabilities.
 
 ---
 

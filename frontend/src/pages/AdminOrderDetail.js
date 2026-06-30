@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import toast from 'react-hot-toast';
 import InvoiceDetails from '../components/InvoiceDetails';
 import ShippingLabel from '../components/admin/ShippingLabel';
@@ -46,9 +45,7 @@ export default function AdminOrderDetail() {
   const fetchOrder = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`/api/orders/admin/${id}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
+      const { data } = await adminAPI.getOrderDetail(id);
       if (data.order) {
         setOrder(data.order);
         setUser(data.order.user);
@@ -74,9 +71,7 @@ export default function AdminOrderDetail() {
     if (updating) return;
     try {
       setUpdating(true);
-      const { data } = await axios.put(`/api/orders/${id}/status`, { status: newStatus }, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
+      const { data } = await adminAPI.updateOrderStatus(id, { status: newStatus });
       setOrder(data.order);
       toast.success('Order status updated successfully');
     } catch (err) {
@@ -94,9 +89,7 @@ export default function AdminOrderDetail() {
         ...courierForm,
         expectedDeliveryAt: courierForm.expectedDeliveryAt || undefined,
       };
-      const { data } = await axios.put(`/api/orders/${id}/status`, { courierDetails }, {
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-      });
+      const { data } = await adminAPI.updateOrderStatus(id, { courierDetails });
       setOrder(data.order);
       toast.success('Courier details updated successfully');
     } catch (err) {
@@ -171,7 +164,7 @@ export default function AdminOrderDetail() {
             Order #{order.orderNumber}
           </h1>
           <p style={{ color: '#6B7280', fontSize: '14px' }}>
-            Placed on {new Date(order.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
+            Placed on {new Date(order.createdAt).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata', day: 'numeric', month: 'long', year: 'numeric' })}
           </p>
         </div>
 

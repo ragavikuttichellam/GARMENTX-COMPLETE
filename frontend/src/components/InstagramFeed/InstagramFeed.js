@@ -15,48 +15,48 @@ const InstagramFeed = () => {
       image: "https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=300&q=80",
       caption: "New Summer Collection 2025 ☀️",
       likes: 1250,
-      url: "https://instagram.com/garmentx"
+      url: "https://instagram.com/manisaraworld"
     },
     {
       id: 2,
       image: "https://images.unsplash.com/photo-1595521624651-2faa8cdf8472?w=300&q=80",
       caption: "Premium Quality Fabrics 👗",
       likes: 980,
-      url: "https://instagram.com/garmentx"
+      url: "https://instagram.com/manisaraworld"
     },
     {
       id: 3,
       image: "https://images.unsplash.com/photo-1470825653336-96b3f0f0f0b2?w=300&q=80",
       caption: "Fashion Forward Designs 💫",
       likes: 1540,
-      url: "https://instagram.com/garmentx"
+      url: "https://instagram.com/manisaraworld"
     },
     {
       id: 4,
       image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=300&q=80",
       caption: "Customer Favorites 🌟",
       likes: 890,
-      url: "https://instagram.com/garmentx"
+      url: "https://instagram.com/manisaraworld"
     },
     {
       id: 5,
       image: "https://images.unsplash.com/photo-1576995853950-3135dd27f172?w=300&q=80",
       caption: "Trendy & Comfortable 🔥",
       likes: 1120,
-      url: "https://instagram.com/garmentx"
+      url: "https://instagram.com/manisaraworld"
     },
     {
       id: 6,
       image: "https://images.unsplash.com/photo-1552062407-291c33ba5c77?w=300&q=80",
       caption: "Perfect for Every Occasion ✨",
       likes: 1650,
-      url: "https://instagram.com/garmentx"
+      url: "https://instagram.com/manisaraworld"
     },
   ];
 
   const handleFollowClick = () => {
     setIsFollowing(!isFollowing);
-    window.open('https://instagram.com/garmentx', '_blank');
+    window.open('https://instagram.com/manisaraworld', '_blank');
   };
 
   return (
@@ -73,7 +73,7 @@ const InstagramFeed = () => {
             onClick={handleFollowClick}
           >
             <FiInstagram size={18} />
-            {isFollowing ? 'Following' : 'Follow'} @garmentx
+            {isFollowing ? 'Following' : 'Follow'} @manisaraworld
           </button>
         </div>
 
@@ -101,7 +101,7 @@ const InstagramFeed = () => {
         </div>
 
         <div className="instagram-footer">
-          <a href="https://instagram.com/garmentx" target="_blank" rel="noopener noreferrer" className="view-all-btn">
+          <a href="https://instagram.com/manisaraworld" target="_blank" rel="noopener noreferrer" className="view-all-btn">
             View All Posts on Instagram
           </a>
         </div>

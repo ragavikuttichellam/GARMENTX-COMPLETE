@@ -47,7 +47,7 @@ const orderSchema = new mongoose.Schema({
 
 orderSchema.pre('save', async function(next) {
   if (!this.orderNumber) {
-    this.orderNumber = 'GX' + Date.now() + Math.floor(Math.random()*1000);
+    this.orderNumber = 'MW' + Date.now() + Math.floor(Math.random()*1000);
   }
   next();
 });

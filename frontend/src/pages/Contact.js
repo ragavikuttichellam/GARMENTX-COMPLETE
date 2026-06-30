@@ -29,7 +29,7 @@ export default function Contact() {
         <div>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '28px', marginBottom: '24px', color: '#1A1A2E' }}>Contact Information</h2>
           {[
-            { icon: <FiMail size={20} />, title: 'Email Us', value: 'support@garmentx.com' },
+            { icon: <FiMail size={20} />, title: 'Email Us', value: 'support@manisaraworld.com' },
             { icon: <FiPhone size={20} />, title: 'Call Us', value: '+91 98765 43210' },
             { icon: <FiMapPin size={20} />, title: 'Visit Us', value: '123 Fashion Street, Mumbai, Maharashtra 400001' },
           ].map((item, i) => (

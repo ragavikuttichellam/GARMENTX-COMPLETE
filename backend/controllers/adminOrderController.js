@@ -11,6 +11,19 @@ const STATUS_FROM_SCAN_ACTION = {
   delivered: { status: 'delivered', shippingStatus: 'delivered', isDelivered: true }
 };
 
+const APP_TIMEZONE = 'Asia/Kolkata';
+
+const formatIstDateKey = (date) => {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: APP_TIMEZONE,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).formatToParts(date);
+  const values = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return `${values.year}-${values.month}-${values.day}`;
+};
+
 function normalizeScannedCodes(rawCode) {
   const codes = new Set([String(rawCode).trim()]);
 
@@ -51,7 +64,7 @@ exports.getAdminStats = async (req, res) => {
     // Calculate revenue metrics
     const totalRevenue = paidOrders.reduce((acc, order) => acc + (order.totalPrice || 0), 0);
     const revenueByDay = paidOrders.reduce((acc, order) => {
-      const key = order.createdAt.toISOString().slice(0, 10);
+      const key = formatIstDateKey(order.createdAt);
       acc[key] = (acc[key] || 0) + (order.totalPrice || 0);
       return acc;
     }, {});
@@ -231,7 +244,7 @@ exports.getShippingLabel = async (req, res) => {
     if (!order) return res.status(404).json({ success: false, message: 'Order not found' });
 
     const pdfBuffer = await createShippingLabelPDF(order, {
-      companyName: process.env.COMPANY_NAME || 'GarmentX'
+      companyName: process.env.COMPANY_NAME || 'Manisara World'
     });
 
     const inline = req.query.inline === 'true';

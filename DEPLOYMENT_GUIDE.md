@@ -1,4 +1,4 @@
-# GarmentX - DEPLOYMENT & PRODUCTION CHECKLIST
+# Manisara World - DEPLOYMENT & PRODUCTION CHECKLIST
 
 ## Pre-Deployment Checklist
 
@@ -66,7 +66,7 @@ npm install -g heroku
 heroku login
 
 # Create app
-heroku create garmentx-backend
+heroku create manisara-world-backend
 
 # Add buildpack
 heroku buildpacks:add heroku/nodejs
@@ -110,7 +110,7 @@ sudo apt-get install nodejs npm mongodb
 
 # Clone repository
 git clone your-repo-url
-cd garmentx
+cd Manisara World
 
 # Setup backend
 cd backend
@@ -168,7 +168,7 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - MONGODB_URI=mongodb://mongo:27017/garmentx
+      - MONGODB_URI=mongodb://mongo:27017/Manisara World
       - JWT_SECRET=your_secret
     depends_on:
       - mongo

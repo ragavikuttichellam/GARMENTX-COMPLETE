@@ -25,7 +25,7 @@ const WhatsAppProductDemo = () => {
     stock: 25,
     rating: 4.5,
     reviews: 128,
-    brand: "GarmentX Premium",
+    brand: "Manisara World Premium",
     description: "Ultra-soft premium cotton t-shirt with perfect fit. Available in multiple sizes and colors.",
     features: [
       "100% Organic Cotton",

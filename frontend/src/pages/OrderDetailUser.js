@@ -72,7 +72,7 @@ export default function OrderDetailUser() {
   };
 
   const handleContactSupport = () => {
-    window.location.href = `mailto:support@garmentx.com?subject=Support for order ${order.orderNumber || order._id}`;
+    window.location.href = `mailto:support@manisaraworld.com?subject=Support for order ${order.orderNumber || order._id}`;
   };
 
   if (loading) {
@@ -112,7 +112,7 @@ export default function OrderDetailUser() {
             Order #{order.orderNumber}
           </h1>
           <p style={{ color: '#6B7280', fontSize: '14px' }}>
-            Placed on {new Date(order.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
+            Placed on {new Date(order.createdAt).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata', day: 'numeric', month: 'long', year: 'numeric' })}
           </p>
         </div>
 
@@ -124,7 +124,7 @@ export default function OrderDetailUser() {
             </span>
             {order.isDelivered && order.deliveredAt && (
               <span style={{ color: '#10B981', fontWeight: 500, fontSize: '14px' }}>
-                Delivered on {new Date(order.deliveredAt).toLocaleDateString('en-IN')}
+                Delivered on {new Date(order.deliveredAt).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}
               </span>
             )}
           </div>

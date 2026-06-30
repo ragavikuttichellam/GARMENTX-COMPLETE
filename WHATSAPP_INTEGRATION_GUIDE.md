@@ -103,20 +103,20 @@ Located at: `src/utils/whatsappUtils.js`
 **1. generateProductMessage(product, quantity, productUrl)**
 Generates a professional WhatsApp message with product details:
 ```jsx
-const message = generateProductMessage(product, 1, 'https://garmentx.com/product/123');
+const message = generateProductMessage(product, 1, 'https://manisaraworld.com/product/123');
 ```
 
 **2. generateWhatsAppURL(product, quantity, productUrl)**
 Creates a WhatsApp share URL:
 ```jsx
-const url = generateWhatsAppURL(product, 1, 'https://garmentx.com/product/123');
+const url = generateWhatsAppURL(product, 1, 'https://manisaraworld.com/product/123');
 window.open(url, '_blank');
 ```
 
 **3. openWhatsAppChat(product, quantity, productUrl)**
 Directly opens WhatsApp chat:
 ```jsx
-openWhatsAppChat(product, 1, 'https://garmentx.com/product/123');
+openWhatsAppChat(product, 1, 'https://manisaraworld.com/product/123');
 ```
 
 **4. generateGeneralInquiryURL()**
@@ -135,7 +135,7 @@ window.open(url, '_blank');
 In `src/utils/whatsappUtils.js`, update:
 ```javascript
 const WHATSAPP_NUMBER = "+919999999999"; // Replace with your WhatsApp Business number
-const COMPANY_NAME = "GarmentX";
+const COMPANY_NAME = "Manisara World";
 ```
 
 ---
@@ -174,10 +174,10 @@ For dynamic product pages, add a helper function:
 useEffect(() => {
   // Update Open Graph meta tags for WhatsApp sharing
   const title = product.name;
-  const description = product.description || `Explore ${product.name} on GarmentX`;
-  const image = product.images?.[0] || 'https://garmentx.com/og-image.jpg';
+  const description = product.description || `Explore ${product.name} on Manisara World`;
+  const image = product.images?.[0] || 'https://manisaraworld.com/og-image.jpg';
 
-  document.title = `${title} | GarmentX`;
+  document.title = `${title} | Manisara World`;
   document.querySelector('meta[property="og:title"]').setAttribute('content', title);
   document.querySelector('meta[property="og:description"]').setAttribute('content', description);
   document.querySelector('meta[property="og:image"]').setAttribute('content', image);
@@ -257,7 +257,7 @@ The WhatsApp message includes:
 
 **Example Message:**
 ```
-Hello! 👋 I'm interested in ordering the following product from GarmentX:
+Hello! 👋 I'm interested in ordering the following product from Manisara World:
 
 📦 Product Details
 ━━━━━━━━━━━━━━━━━
@@ -268,7 +268,7 @@ Hello! 👋 I'm interested in ordering the following product from GarmentX:
 
 📝 Details: Ultra-soft premium cotton t-shirt with perfect fit...
 
-🔗 Product Link: https://garmentx.com/product/123
+🔗 Product Link: https://manisaraworld.com/product/123
 
 ✅ Shipping Available
 🚚 Free delivery on orders above ₹999
@@ -289,20 +289,20 @@ Please confirm availability and proceed with the order. Thank you! 🙏
 Added to `public/index.html`:
 ```html
 <!-- Open Graph -->
-<meta property="og:title" content="GarmentX - Upgrade Your Style" />
+<meta property="og:title" content="Manisara World - Upgrade Your Style" />
 <meta property="og:description" content="Premium garments for Men, Women & Kids. Shop the latest fashion." />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://garmentx.com" />
+<meta property="og:url" content="https://manisaraworld.com" />
 <meta property="og:image" content="%PUBLIC_URL%/og-image.jpg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:site_name" content="GarmentX" />
+<meta property="og:site_name" content="Manisara World" />
 
 <!-- WhatsApp Meta Tags -->
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="GarmentX" />
+<meta name="apple-mobile-web-app-title" content="Manisara World" />
 ```
 
 ---

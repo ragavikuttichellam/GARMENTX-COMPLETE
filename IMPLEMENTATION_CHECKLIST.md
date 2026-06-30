@@ -53,14 +53,14 @@ Frontend:
 ### ✅ Environment Configuration
 Backend `.env`:
 ```
-MONGODB_URI=mongodb://localhost:27017/garment
+MONGODB_URI=mongodb://localhost:27017/Manisara World
 JWT_SECRET=[32+ char random string]
 PORT=5000
 FRONTEND_URL=http://localhost:3000
 NODE_ENV=development
-COMPANY_NAME=GarmentX Pvt Ltd
+COMPANY_NAME=Manisara World Pvt Ltd
 COMPANY_ADDRESS=123 Fashion Street, Mumbai
-INVOICE_FOOTER=Thank you for shopping with GarmentX!
+INVOICE_FOOTER=Thank you for shopping with Manisara World!
 ```
 
 Frontend `.env`:
@@ -70,7 +70,7 @@ REACT_APP_API_URL=http://localhost:5000/api
 
 ### ✅ Database Setup
 - [ ] MongoDB running
-- [ ] Database created: `garment`
+- [ ] Database created: `Manisara World`
 - [ ] Collections will auto-create
 - [ ] Test data can be seeded
 

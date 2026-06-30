@@ -1,4 +1,4 @@
-# 🚀 GarmentX MERN Ecommerce - Complete Implementation Guide
+# 🚀 Manisara World MERN Ecommerce - Complete Implementation Guide
 
 > Full-stack luxury fashion ecommerce platform with professional features, WhatsApp integration, Instagram feeds, and production-ready architecture.
 
@@ -23,7 +23,7 @@
 
 ## 🎯 Project Overview
 
-**GarmentX** is a comprehensive MERN stack ecommerce platform designed for premium fashion retail with luxury UI, advanced business features, and complete order management system.
+**Manisara World** is a comprehensive MERN stack ecommerce platform designed for premium fashion retail with luxury UI, advanced business features, and complete order management system.
 
 ### Key Highlights:
 - ✅ Production-ready MERN stack
@@ -220,7 +220,7 @@ Media: Cloudinary CDN
 ### Step 1: Clone Repository
 ```bash
 git clone <repository-url>
-cd garmentx
+cd Manisara World
 ```
 
 ### Step 2: Backend Setup
@@ -230,7 +230,7 @@ npm install
 
 # Create .env file
 cat > .env << EOF
-MONGODB_URI=mongodb+srv://user:password@cluster.mongodb.net/garmentx
+MONGODB_URI=mongodb+srv://user:password@cluster.mongodb.net/Manisara World
 JWT_SECRET=your_super_secret_jwt_key_change_this
 PORT=5000
 NODE_ENV=development
@@ -252,7 +252,7 @@ EMAIL_SMTP=smtp.gmail.com
 
 # WhatsApp
 WHATSAPP_NUMBER=+919999999999
-COMPANY_NAME=GarmentX
+COMPANY_NAME=Manisara World
 EOF
 
 npm start
@@ -288,7 +288,7 @@ node scripts/seedData.js
 
 ```env
 # Database
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/garmentx
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/Manisara World
 
 # JWT
 JWT_SECRET=super_secure_random_string_min_32_chars
@@ -299,25 +299,25 @@ PORT=5000
 NODE_ENV=production
 
 # Frontend
-FRONTEND_URL=https://garmentx.com
+FRONTEND_URL=https://manisaraworld.com
 
 # Razorpay
 RAZORPAY_KEY_ID=rzp_live_XXXXX
 RAZORPAY_KEY_SECRET=XXXXX
 
 # Cloudinary
-CLOUDINARY_NAME=garmentx
+CLOUDINARY_NAME=Manisara World
 CLOUDINARY_API_KEY=XXXXX
 CLOUDINARY_API_SECRET=XXXXX
 
 # Email
-EMAIL_USER=noreply@garmentx.com
+EMAIL_USER=noreply@manisaraworld.com
 EMAIL_PASS=app_specific_password
-EMAIL_FROM=GarmentX <noreply@garmentx.com>
+EMAIL_FROM=Manisara World <noreply@manisaraworld.com>
 
 # WhatsApp
 WHATSAPP_NUMBER=+919999999999
-COMPANY_NAME=GarmentX
+COMPANY_NAME=Manisara World
 
 # Company Info (for invoices)
 COMPANY_ADDRESS=123 Fashion Street, Mumbai, India
@@ -328,10 +328,10 @@ INVOICE_FOOTER=Thank you for your purchase!
 ### Environment Variables - Frontend
 
 ```env
-REACT_APP_API_URL=https://api.garmentx.com
+REACT_APP_API_URL=https://api.Manisara World.com
 REACT_APP_RAZORPAY_KEY=rzp_live_XXXXX
-REACT_APP_CLOUDINARY_CLOUD_NAME=garmentx
-REACT_APP_CLOUDINARY_PRESET=garmentx_unsigned
+REACT_APP_CLOUDINARY_CLOUD_NAME=Manisara World
+REACT_APP_CLOUDINARY_PRESET=Manisara World_unsigned
 ```
 
 ---
@@ -682,7 +682,7 @@ vercel --prod
 ```bash
 cd backend
 heroku login
-heroku create garmentx-api
+heroku create Manisara World-api
 git push heroku main
 ```
 
@@ -699,7 +699,7 @@ npm run build
 ```bash
 cd frontend
 npm run build
-aws s3 sync build/ s3://garmentx-prod/
+aws s3 sync build/ s3://Manisara World-prod/
 ```
 
 **Backend (EC2 / Elastic Beanstalk):**
@@ -727,12 +727,12 @@ cd /app/backend && npm install && npm start
 
 ```bash
 # Using Let's Encrypt
-sudo certbot certonly --standalone -d garmentx.com
+sudo certbot certonly --standalone -d Manisara World.com
 
 # Configure NGINX reverse proxy
 server {
     listen 443 ssl http2;
-    server_name garmentx.com;
+    server_name Manisara World.com;
     
     ssl_certificate /path/to/cert.pem;
     ssl_certificate_key /path/to/key.pem;
@@ -833,7 +833,7 @@ db.users.createIndex({ email: 1 })
 ```html
 <meta name="description" content="Premium fashion ecommerce platform" />
 <meta name="keywords" content="saree, fashion, clothing, India" />
-<meta property="og:title" content="GarmentX - Fashion Ecommerce" />
+<meta property="og:title" content="Manisara World - Fashion Ecommerce" />
 <meta property="og:image" content="preview-image.jpg" />
 <meta name="twitter:card" content="summary_large_image" />
 ```
@@ -858,7 +858,7 @@ db.users.createIndex({ email: 1 })
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://garmentx.com/</loc>
+    <loc>https://manisaraworld.com/</loc>
     <lastmod>2025-01-01</lastmod>
     <priority>1.0</priority>
   </url>
@@ -870,7 +870,7 @@ db.users.createIndex({ email: 1 })
 ## 🤝 Support & Contributing
 
 For issues, questions, or contributions:
-- Email: support@garmentx.com
+- Email: support@manisaraworld.com
 - WhatsApp: +91-9999999999
 - GitHub Issues: [Link to issues]
 

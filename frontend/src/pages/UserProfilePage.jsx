@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, User, ShoppingBag, MapPin, Download, Eye } from 'lucide-react';
+import { LogOut, User, ShoppingBag, MapPin, Download, Eye, Lock } from 'lucide-react';
 import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Footer/Footer';
-import api from '../utils/api';
+import { authAPI, orderAPI } from '../utils/api';
 import toast from 'react-hot-toast';
 
 const UserProfilePage = () => {
@@ -14,6 +14,8 @@ const UserProfilePage = () => {
   const [activeTab, setActiveTab] = useState('orders');
   const [editMode, setEditMode] = useState(false);
   const [editData, setEditData] = useState({});
+  const [passwordData, setPasswordData] = useState({ currentPassword: '', newPassword: '', confirmPassword: '' });
+  const [changingPassword, setChangingPassword] = useState(false);
 
   useEffect(() => {
     loadUserData();
@@ -22,17 +24,11 @@ const UserProfilePage = () => {
   const loadUserData = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('token');
-      if (!token) {
-        navigate('/login');
-        return;
-      }
+      const userRes = await authAPI.getProfile();
+      setUser(userRes.data.user);
+      setEditData(userRes.data.user);
 
-      const userRes = await api.get('/auth/me');
-      setUser(userRes.data);
-      setEditData(userRes.data);
-
-      const ordersRes = await api.get('/orders/my-orders');
+      const ordersRes = await orderAPI.getMyOrders();
       setOrders(ordersRes.data.orders || []);
     } catch (error) {
       console.error('Error loading user data:', error);
@@ -47,7 +43,7 @@ const UserProfilePage = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('manisara_world_token');
     localStorage.removeItem('user');
     localStorage.removeItem('cart');
     toast.success('Logged out successfully');
@@ -56,12 +52,36 @@ const UserProfilePage = () => {
 
   const handleSaveProfile = async () => {
     try {
-      const res = await api.put('/user/profile', editData);
-      setUser(res.data);
+      const res = await authAPI.updateProfile(editData);
+      setUser(res.data.user);
       setEditMode(false);
       toast.success('Profile updated successfully');
     } catch (error) {
-      toast.error('Error updating profile');
+      toast.error(error.response?.data?.message || 'Error updating profile');
+    }
+  };
+
+  const handleChangePassword = async () => {
+    try {
+      if (!passwordData.currentPassword || !passwordData.newPassword || !passwordData.confirmPassword) {
+        toast.error('Please fill in all password fields');
+        return;
+      }
+      if (passwordData.newPassword !== passwordData.confirmPassword) {
+        toast.error('New password and confirmation do not match');
+        return;
+      }
+      setChangingPassword(true);
+      await authAPI.changePassword({
+        currentPassword: passwordData.currentPassword,
+        newPassword: passwordData.newPassword
+      });
+      setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
+      toast.success('Password changed successfully');
+    } catch (error) {
+      toast.error(error.response?.data?.message || 'Error changing password');
+    } finally {
+      setChangingPassword(false);
     }
   };
 
@@ -143,7 +163,7 @@ const UserProfilePage = () => {
                 <div>
                   <p className="text-xs text-gray-600 uppercase">Member Since</p>
                   <p className="text-gray-900 font-semibold">
-                    {new Date(user.createdAt).toLocaleDateString('en-IN')}
+                    {new Date(user.createdAt).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}
                   </p>
                 </div>
               </div>
@@ -180,6 +200,17 @@ const UserProfilePage = () => {
               >
                 <User className="w-5 h-5" />
                 Edit Profile
+              </button>
+              <button
+                onClick={() => setActiveTab('security')}
+                className={`pb-4 font-semibold transition-colors flex items-center gap-2 ${
+                  activeTab === 'security'
+                    ? 'text-pink-500 border-b-2 border-pink-500'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                <Lock className="w-5 h-5" />
+                Security
               </button>
               <button
                 onClick={() => setActiveTab('addresses')}
@@ -222,7 +253,7 @@ const UserProfilePage = () => {
                         <div>
                           <p className="text-sm text-gray-600 mb-1">Date</p>
                           <p className="font-semibold text-gray-900">
-                            {new Date(order.createdAt).toLocaleDateString('en-IN')}
+                            {new Date(order.createdAt).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}
                           </p>
                         </div>
                         <div>
@@ -343,6 +374,49 @@ const UserProfilePage = () => {
                     </button>
                   </div>
                 )}
+              </div>
+            )}
+
+            {/* Security Tab */}
+            {activeTab === 'security' && (
+              <div className="bg-white rounded-lg shadow-md p-6">
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">Current Password</label>
+                    <input
+                      type="password"
+                      value={passwordData.currentPassword}
+                      onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-pink-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">New Password</label>
+                    <input
+                      type="password"
+                      value={passwordData.newPassword}
+                      onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-pink-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-900 mb-2">Confirm New Password</label>
+                    <input
+                      type="password"
+                      value={passwordData.confirmPassword}
+                      onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-pink-500"
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleChangePassword}
+                    disabled={changingPassword}
+                    className="w-full bg-pink-500 text-white py-2 rounded-lg font-semibold hover:bg-pink-600 transition-colors disabled:opacity-60"
+                  >
+                    {changingPassword ? 'Updating Password...' : 'Update Password'}
+                  </button>
+                </div>
               </div>
             )}
 

@@ -4,6 +4,9 @@ import { Heart, ShoppingCart, Share2, ChevronLeft, ChevronRight, Star, Truck, Re
 import Navbar from '../components/Navbar/Navbar';
 import Footer from '../components/Footer/Footer';
 import WhatsAppButton from '../components/WhatsApp/WhatsAppButton';
+import ReviewSummary from '../components/Reviews/ReviewSummary';
+import ReviewForm from '../components/Reviews/ReviewForm';
+import ReviewsList from '../components/Reviews/ReviewsList';
 import api from '../utils/api';
 import toast from 'react-hot-toast';
 
@@ -342,34 +345,10 @@ const ProductDetailPage = () => {
         {/* Reviews Section */}
         <section className="mb-12">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Customer Reviews</h2>
-          <div className="space-y-6">
-            {reviews.length > 0 ? (
-              reviews.slice(0, 5).map((review) => (
-                <div key={review._id} className="border border-gray-200 rounded-lg p-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <div>
-                      <p className="font-semibold text-gray-900">{review.userName}</p>
-                      <div className="flex items-center gap-2 mt-1">
-                        {[...Array(5)].map((_, i) => (
-                          <Star
-                            key={i}
-                            className={`w-4 h-4 ${
-                              i < review.rating
-                                ? 'fill-yellow-400 text-yellow-400'
-                                : 'text-gray-300'
-                            }`}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                    <span className="text-sm text-gray-600">{new Date(review.createdAt).toLocaleDateString()}</span>
-                  </div>
-                  <p className="text-gray-700">{review.comment}</p>
-                </div>
-              ))
-            ) : (
-              <p className="text-gray-600">No reviews yet. Be the first to review!</p>
-            )}
+          <div className="space-y-8">
+            <ReviewSummary productId={productId} />
+            <ReviewForm productId={productId} />
+            <ReviewsList productId={productId} />
           </div>
         </section>
 

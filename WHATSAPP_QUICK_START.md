@@ -7,7 +7,7 @@
 Edit `src/utils/whatsappUtils.js`:
 ```javascript
 const WHATSAPP_NUMBER = "+919999999999"; // Replace with your WhatsApp Business number
-const COMPANY_NAME = "GarmentX";
+const COMPANY_NAME = "Manisara World";
 ```
 
 ### Step 2: Add Floating Widget to App (1 min)
@@ -49,7 +49,7 @@ import WhatsAppButton from '../components/WhatsApp/WhatsAppButton';
 
 Edit `public/index.html` - Add these tags in `<head>`:
 ```html
-<meta property="og:title" content="GarmentX - Upgrade Your Style" />
+<meta property="og:title" content="Manisara World - Upgrade Your Style" />
 <meta property="og:description" content="Premium garments for Men, Women & Kids." />
 <meta property="og:image" content="%PUBLIC_URL%/og-image.jpg" />
 <meta property="og:image:width" content="1200" />

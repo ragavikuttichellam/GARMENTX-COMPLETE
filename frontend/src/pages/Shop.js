@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import axios from 'axios';
+import api from '../utils/api';
 import { FiFilter, FiX, FiChevronDown, FiSearch } from 'react-icons/fi';
 import ProductCard from '../components/ProductCard/ProductCard';
 import './Shop.css';
@@ -42,7 +42,7 @@ export default function Shop({ category: propCategory, newArrival, offer }) {
       if (offer) params.set('offer', 'true');
       params.set('page', page);
       params.set('limit', '12');
-      const { data } = await axios.get('/api/products?' + params.toString());
+      const { data } = await api.get('/products', { params });
       setProducts(data.products || []);
       setTotal(data.total || 0);
       setPages(data.pages || 1);

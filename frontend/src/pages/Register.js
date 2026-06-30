@@ -21,7 +21,7 @@ export default function Register() {
     try {
       const data = await register(form.name, form.email, form.password, form.phone);
       if (data.success) {
-        toast.success('Account created! Welcome to GarmentX 🎉');
+        toast.success('Account created! Welcome to Manisara World 🎉');
         navigate('/');
       } else {
         toast.error(data.message || 'Registration failed');
@@ -45,7 +45,7 @@ export default function Register() {
         <div style={styles.header}>
           <div style={styles.logo}>G<span style={{ color: '#C8102E' }}>X</span></div>
           <h1 style={styles.title}>Create Account</h1>
-          <p style={styles.subtitle}>Join GarmentX — Fashion is waiting for you</p>
+          <p style={styles.subtitle}>Join Manisara World — Fashion is waiting for you</p>
         </div>
 
         <form onSubmit={handleSubmit} style={styles.form}>

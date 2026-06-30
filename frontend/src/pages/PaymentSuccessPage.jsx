@@ -78,6 +78,7 @@ const PaymentSuccessPage = () => {
                   <p className="text-sm text-gray-600 mb-1">Order Date</p>
                   <p className="text-lg font-semibold text-gray-900">
                     {new Date(order.createdAt).toLocaleDateString('en-IN', {
+                      timeZone: 'Asia/Kolkata',
                       year: 'numeric',
                       month: 'long',
                       day: 'numeric'

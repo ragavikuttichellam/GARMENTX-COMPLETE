@@ -169,7 +169,7 @@ export default function InvoiceDetails({ order, onClose }) {
                 <div>
                   <p style={{ fontSize: '12px', color: '#6B7280' }}>Order Date</p>
                   <p style={{ fontWeight: 700, color: '#111827' }}>
-                    {new Date(order.createdAt).toLocaleDateString('en-IN')}
+                    {new Date(order.createdAt).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}
                   </p>
                 </div>
                 <div>

@@ -9,8 +9,8 @@ export default function Footer() {
         {/* Brand */}
         <div>
           <div style={styles.logoWrap}>
-            <div style={styles.logoIcon}>G<span style={{ color: '#FFB800' }}>X</span></div>
-            <span style={styles.logoText}>GarmentX</span>
+            <div style={styles.logoIcon}>MW</div>
+            <span style={styles.logoText}>Manisara World</span>
           </div>
           <p style={styles.tagline}>Fashion that speaks your language. Premium garments for every occasion.</p>
           <div style={styles.socials}>
@@ -54,7 +54,7 @@ export default function Footer() {
           <h4 style={styles.colTitle}>Contact Us</h4>
           <div style={styles.contactItem}>
             <FiMail size={16} style={{ color: '#FFB800', flexShrink: 0 }} />
-            <span>support@garmentx.com</span>
+            <span>support@manisaraworld.com</span>
           </div>
           <div style={styles.contactItem}>
             <FiPhone size={16} style={{ color: '#FFB800', flexShrink: 0 }} />
@@ -81,7 +81,7 @@ export default function Footer() {
       <div style={styles.bottom}>
         <div className="container" style={styles.bottomInner}>
           <p style={{ color: '#6B7280', fontSize: '14px' }}>
-            © {new Date().getFullYear()} GarmentX. All rights reserved.
+            © {new Date().getFullYear()} Manisara World. All rights reserved.
           </p>
           <p style={{ color: '#6B7280', fontSize: '14px' }}>
             Made with ❤️ in India 🇮🇳

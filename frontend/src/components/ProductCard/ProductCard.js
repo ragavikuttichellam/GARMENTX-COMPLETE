@@ -45,7 +45,7 @@ export default function ProductCard({ product }) {
         </button>
       </div>
       <div className="product-info">
-        <p className="product-brand">{product.brand || 'GarmentX'}</p>
+        <p className="product-brand">{product.brand || 'Manisara World'}</p>
         <h3 className="product-name">{product.name}</h3>
         <div className="product-rating">
           <div className="stars">

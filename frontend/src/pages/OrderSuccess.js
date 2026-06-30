@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import axios from 'axios';
+import { orderAPI } from '../utils/api';
 import { FiCheckCircle, FiPackage, FiArrowRight, FiDownload } from 'react-icons/fi';
 
 export default function OrderSuccess() {
@@ -8,7 +8,7 @@ export default function OrderSuccess() {
   const [order, setOrder] = useState(null);
 
   useEffect(() => {
-    axios.get('/api/orders/' + id)
+    orderAPI.getById(id)
       .then(({ data }) => setOrder(data.order))
       .catch(console.error);
   }, [id]);
@@ -23,7 +23,7 @@ export default function OrderSuccess() {
 
         <h1 style={styles.title}>Payment Successful! 🎉</h1>
         <p style={styles.subtitle}>
-          Thank you for shopping with GarmentX! Your order has been confirmed and will be delivered soon.
+          Thank you for shopping with Manisara World! Your order has been confirmed and will be delivered soon.
         </p>
 
         {order && (

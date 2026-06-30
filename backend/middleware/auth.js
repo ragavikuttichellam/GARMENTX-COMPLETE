@@ -1,5 +1,10 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const JWT_SECRET = process.env.JWT_SECRET;
+
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is required');
+}
 
 exports.protect = async (req, res, next) => {
   try {
@@ -9,7 +14,7 @@ exports.protect = async (req, res, next) => {
     }
     if (!token) return res.status(401).json({ success: false, message: 'Not authorized, no token' });
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback_secret_dev');
+    const decoded = jwt.verify(token, JWT_SECRET);
     const user = await User.findById(decoded.id).select('-password');
     if (!user) return res.status(401).json({ success: false, message: 'User not found' });
     if (!user.isActive) return res.status(401).json({ success: false, message: 'Account deactivated' });

@@ -55,7 +55,7 @@ const product = {
 const message = generateProductMessage(
   product,
   1,
-  'https://garmentx.com/product/123'
+  'https://manisaraworld.com/product/123'
 );
 
 console.log(message);
@@ -235,7 +235,7 @@ import { getWhatsAppInfo } from './utils/whatsappUtils';
 
 const info = getWhatsAppInfo();
 console.log(info.number);   // "+919999999999"
-console.log(info.company);  // "GarmentX"
+console.log(info.company);  // "Manisara World"
 ```
 
 ---
@@ -677,7 +677,7 @@ const button: React.FC<WhatsAppButtonProps> = (props) => {
 ```javascript
 // Company Info
 const WHATSAPP_NUMBER = "+919999999999";
-const COMPANY_NAME = "GarmentX";
+const COMPANY_NAME = "Manisara World";
 
 // Modify these to customize all components
 ```

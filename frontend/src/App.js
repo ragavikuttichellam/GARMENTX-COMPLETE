@@ -10,6 +10,7 @@ import Shop from './pages/Shop';
 import ProductDetail from './pages/ProductDetail';
 import CartPage from './pages/CartPage';
 import Checkout from './pages/Checkout';
+import Contact from './pages/Contact';
 import OrderSuccess from './pages/OrderSuccess';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -37,6 +38,7 @@ function App() {
               <Route path="/kids" element={<Shop category="kids" />} />
               <Route path="/new-arrivals" element={<Shop newArrival />} />
               <Route path="/offers" element={<Shop offer />} />
+              <Route path="/contact" element={<Contact />} />
               <Route path="/product/:id" element={<ProductDetail />} />
               <Route path="/cart" element={<CartPage />} />
               <Route path="/login" element={<Login />} />

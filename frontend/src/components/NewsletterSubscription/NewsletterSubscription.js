@@ -51,7 +51,7 @@ const NewsletterSubscription = () => {
       <div className="container newsletter-container">
         <div className="newsletter-content">
           <div className="newsletter-text">
-            <h2>Stay Updated with GarmentX</h2>
+            <h2>Stay Updated with Manisara World</h2>
             <p>Get exclusive offers, new arrivals, and fashion tips delivered to your inbox</p>
             <div className="newsletter-benefits">
               <span>✓ Exclusive Discounts</span>

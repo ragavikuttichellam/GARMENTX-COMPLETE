@@ -48,7 +48,7 @@ export default function CartPage() {
                 <img src={item.images?.[0] || 'https://via.placeholder.com/120'} alt={item.name} />
               </Link>
               <div className="cart-item-info">
-                <p className="cart-brand">{item.brand || 'GarmentX'}</p>
+                <p className="cart-brand">{item.brand || 'Manisara World'}</p>
                 <h3 className="cart-name">{item.name}</h3>
                 <div className="cart-meta">
                   {item.size && <span className="meta-chip">Size: {item.size}</span>}

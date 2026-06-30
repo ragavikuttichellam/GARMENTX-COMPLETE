@@ -62,7 +62,7 @@ const FloatingWhatsApp = () => {
                   <FiMessageCircle size={24} />
                 </div>
                 <div>
-                  <h4 className="floating-whatsapp__chat-title">GarmentX</h4>
+                  <h4 className="floating-whatsapp__chat-title">Manisara World</h4>
                   <p className="floating-whatsapp__chat-subtitle">Usually replies instantly</p>
                 </div>
               </div>
@@ -80,7 +80,7 @@ const FloatingWhatsApp = () => {
               {/* Bot Message */}
               <div className="floating-whatsapp__message-item bot">
                 <div className="floating-whatsapp__message-bubble">
-                  <p>Hi! 👋 Welcome to GarmentX</p>
+                  <p>Hi! 👋 Welcome to Manisara World</p>
                 </div>
                 <span className="floating-whatsapp__message-time">just now</span>
               </div>

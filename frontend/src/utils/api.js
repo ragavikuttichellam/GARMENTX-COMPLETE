@@ -11,7 +11,7 @@ const api = axios.create({
 // Request interceptor – attach JWT
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('garmentx_token');
+    const token = localStorage.getItem('manisara_world_token');
     if (token) config.headers.Authorization = `Bearer ${token}`;
     return config;
   },
@@ -23,8 +23,8 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      localStorage.removeItem('garmentx_token');
-      localStorage.removeItem('garmentx_user');
+      localStorage.removeItem('manisara_world_token');
+      localStorage.removeItem('manisara_world_user');
       if (!window.location.pathname.includes('/login')) {
         window.location.href = '/login';
       }
@@ -51,6 +51,20 @@ export const productAPI = {
   addReview:    (id, data)=> api.post(`/products/${id}/review`, data),
 };
 
+export const reviewAPI = {
+  add:        (data) => api.post('/reviews/add', data, { headers: { 'Content-Type': 'multipart/form-data' } }),
+  getByProduct: (id, params) => api.get(`/reviews/product/${id}`, { params }),
+  update:     (id, data) => api.put(`/reviews/update/${id}`, data, { headers: { 'Content-Type': 'multipart/form-data' } }),
+  delete:     (id) => api.delete(`/reviews/delete/${id}`),
+  average:    (id) => api.get(`/reviews/average/${id}`),
+  helpful:    (id) => api.post(`/reviews/${id}/helpful`),
+  report:     (id, data) => api.post(`/reviews/${id}/report`, data),
+  adminList:  (params) => api.get('/reviews/admin/all', { params }),
+  analytics:  () => api.get('/reviews/admin/analytics'),
+  reply:      (id, data) => api.put(`/reviews/reply/${id}`, data),
+  moderate:   (id, data) => api.put(`/reviews/moderate/${id}`, data),
+};
+
 // ─── Orders ───────────────────────────────────────────────────────────────────
 export const orderAPI = {
   create:    (data)       => api.post('/orders', data),
@@ -63,7 +77,7 @@ export const orderAPI = {
 // ─── Payment ──────────────────────────────────────────────────────────────────
 export const paymentAPI = {
   getKey:         ()          => api.get('/payment/key'),
-  createOrder:    (data)      => api.post('/payment/create-order', data),
+  createOrder:    (data)      => api.post('/payment/razorpay', data),
   verify:         (data)      => api.post('/payment/verify', data),
 };
 
@@ -75,8 +89,23 @@ export const adminAPI = {
   deleteProduct:      (id)        => api.delete(`/admin/products/${id}`),
   getAllOrders:       (params)    => api.get('/orders/admin/all', { params }),
   getOrderDetail:     (id)        => api.get(`/orders/admin/${id}`),
+  getOrderById:       (id)        => api.get(`/orders/admin/${id}`),
   updateOrderStatus:  (id, data)  => api.put(`/orders/${id}/status`, data),
   getAllUsers:        ()          => api.get('/admin/users'),
+  getInvoice:         async (id, inline = false) => {
+    const { data } = await api.get(`/admin/orders/${id}/invoice`, {
+      params: inline ? { inline: true } : {},
+      responseType: 'blob'
+    });
+    return data;
+  },
+  getShippingLabel:   async (id, inline = false) => {
+    const { data } = await api.get(`/admin/orders/${id}/shipping-label`, {
+      params: inline ? { inline: true } : {},
+      responseType: 'blob'
+    });
+    return data;
+  },
 };
 
 export default api;

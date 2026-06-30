@@ -19,7 +19,7 @@ const token = jwt.sign(
 // In api.js interceptor
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('garmentx_token');
+    const token = localStorage.getItem('manisara_world_token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -101,7 +101,7 @@ Authorization: Bearer <token>
   "orders": [
     {
       "_id": "6547abc123def456",
-      "orderNumber": "GX16847123456",
+      "orderNumber": "MW16847123456",
       "status": "pending",
       "totalPrice": 2999,
       "createdAt": "2024-05-22T10:30:00Z",
@@ -140,7 +140,7 @@ Authorization: Bearer <admin_token>
   "success": true,
   "order": {
     "_id": "6547abc123def456",
-    "orderNumber": "GX16847123456",
+    "orderNumber": "MW16847123456",
     "status": "pending",
     "user": {
       "_id": "userId",
@@ -200,7 +200,7 @@ Authorization: Bearer <admin_token>
   "orders": [
     {
       "_id": "6547abc123def456",
-      "orderNumber": "GX16847123456",
+      "orderNumber": "MW16847123456",
       "user": {
         "name": "John Doe",
         "email": "john@example.com"
@@ -517,15 +517,15 @@ try {
 
 ```env
 PORT=5000
-MONGODB_URI=mongodb://localhost:27017/garmentx
+MONGODB_URI=mongodb://localhost:27017/Manisara World
 JWT_SECRET=your-super-secret-key-change-in-production
 JWT_EXPIRE=7d
 NODE_ENV=development
 
 # Company Details
-COMPANY_NAME=GarmentX Pvt Ltd
+COMPANY_NAME=Manisara World Pvt Ltd
 COMPANY_ADDRESS=123 Fashion Street, Mumbai
-INVOICE_FOOTER=Thank you for shopping with GarmentX!
+INVOICE_FOOTER=Thank you for shopping with Manisara World!
 ```
 
 ### Frontend (.env)

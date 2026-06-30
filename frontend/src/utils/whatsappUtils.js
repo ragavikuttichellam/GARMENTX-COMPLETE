@@ -4,7 +4,7 @@
  */
 
 const WHATSAPP_NUMBER = "+919999999999"; // Replace with your WhatsApp Business number
-const COMPANY_NAME = "GarmentX";
+const COMPANY_NAME = "Manisara World";
 
 /**
  * Generate WhatsApp message for product order

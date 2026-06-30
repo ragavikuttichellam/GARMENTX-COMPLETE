@@ -8,8 +8,8 @@ const Footer = () => {
       <div className="footer-top container">
         <div className="footer-brand">
           <div className="footer-logo">
-            <span className="logo-icon">GX</span>
-            <span>GarmentX</span>
+            <span className="logo-icon">MW</span>
+            <span>Manisara World</span>
           </div>
           <p>Premium garments crafted for every occasion. Style meets quality in every stitch.</p>
           <div className="social-links">
@@ -49,7 +49,7 @@ const Footer = () => {
           <div className="contact-info">
             <p>📍 123 Fashion Street, Mumbai, Maharashtra 400001</p>
             <p>📞 +91 98765 43210</p>
-            <p>✉️ support@garmentx.com</p>
+            <p>✉️ support@manisaraworld.com</p>
             <p>⏰ Mon–Sat, 9AM–6PM IST</p>
           </div>
           <div className="newsletter">
@@ -63,7 +63,7 @@ const Footer = () => {
       </div>
 
       <div className="footer-bottom container">
-        <p>© {new Date().getFullYear()} GarmentX. All rights reserved. Made with ❤️ in India.</p>
+        <p>© {new Date().getFullYear()} Manisara World. All rights reserved. Made with ❤️ in India.</p>
         <div className="payment-badges">
           <span>💳 Visa</span>
           <span>💳 Mastercard</span>

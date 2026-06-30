@@ -17,7 +17,7 @@ const EnhancedWhatsAppFloating = () => {
   const [hasNotification, setHasNotification] = useState(true);
 
   const WHATSAPP_NUMBER = "+919999999999";
-  const COMPANY_NAME = "GarmentX";
+  const COMPANY_NAME = "Manisara World";
 
   const quickMessages = [
     {

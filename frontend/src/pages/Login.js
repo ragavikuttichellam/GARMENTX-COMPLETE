@@ -40,7 +40,7 @@ export default function Login() {
         <div style={styles.header}>
           <div style={styles.logo}>G<span style={{ color: '#C8102E' }}>X</span></div>
           <h1 style={styles.title}>Welcome Back</h1>
-          <p style={styles.subtitle}>Sign in to your GarmentX account</p>
+          <p style={styles.subtitle}>Sign in to your Manisara World account</p>
         </div>
 
         <form onSubmit={handleSubmit} style={styles.form}>
@@ -88,7 +88,7 @@ export default function Login() {
 
         <div style={styles.demoBox}>
           <p style={{ fontSize: '13px', color: '#6B7280', marginBottom: '8px', fontWeight: 600 }}>🔑 Demo Credentials</p>
-          <p style={{ fontSize: '12px', color: '#9CA3AF' }}>Admin: <strong>admin@garmentx.com</strong> / <strong>Admin@123</strong></p>
+          <p style={{ fontSize: '12px', color: '#9CA3AF' }}>Admin: <strong>admin@manisaraworld.com</strong> / <strong>Admin@123</strong></p>
         </div>
 
         <p style={styles.switchText}>

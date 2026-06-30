@@ -256,7 +256,7 @@ export default function OrderTracking({ order, onRefresh }) {
                       textAlign: 'right'
                     }}>
                       {scan.scannedAt
-                        ? new Date(scan.scannedAt).toLocaleString('en-IN')
+                        ? new Date(scan.scannedAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
                         : 'N/A'}
                     </div>
                   </div>

@@ -1,4 +1,4 @@
-# GarmentX Ecommerce Order System - Implementation Complete ✅
+# Manisara World Ecommerce Order System - Implementation Complete ✅
 
 ## 📋 System Architecture
 
@@ -229,7 +229,7 @@ PUT /api/orders/:id/cancel
 - ✅ Smooth animations
 
 **Color Scheme:**
-- Primary: #C8102E (Garment Red)
+- Primary: #C8102E (Manisara World Red)
 - Success: #10B981 (Green)
 - Warning: #FFB800 (Yellow)
 - Info: #3B82F6 (Blue)
@@ -262,7 +262,7 @@ PUT /api/orders/:id/cancel
 ## 📁 Project Structure
 
 ```
-garmentx/
+Manisara World/
 ├── backend/
 │   ├── controllers/
 │   │   ├── orderController.js (✅ Create, Get, Cancel)
@@ -481,7 +481,7 @@ REACT_APP_API_URL=http://localhost:5000/api
 **Backend Environment Variables:**
 ```
 PORT=5000
-MONGODB_URI=mongodb://localhost:27017/garmentx
+MONGODB_URI=mongodb://localhost:27017/Manisara World
 JWT_SECRET=your-secret-key-here
 JWT_EXPIRE=7d
 ```

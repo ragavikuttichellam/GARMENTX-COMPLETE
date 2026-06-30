@@ -325,12 +325,12 @@ cd backend
 npm install
 
 # Create .env file
-MONGODB_URI=mongodb://localhost:27017/garment
+MONGODB_URI=mongodb://localhost:27017/Manisara World
 JWT_SECRET=your-secret-key
 PORT=5000
 FRONTEND_URL=http://localhost:3000
 NODE_ENV=development
-COMPANY_NAME=GarmentX Pvt Ltd
+COMPANY_NAME=Manisara World Pvt Ltd
 COMPANY_ADDRESS=123 Fashion Street, Mumbai
 ```
 
@@ -543,12 +543,12 @@ NODE_ENV=production npm start
   "message": "Scan processed successfully",
   "order": {
     "_id": "...",
-    "orderNumber": "GX1234567890",
+    "orderNumber": "MW1234567890",
     "status": "packed",
     "shippingStatus": "packed",
     "scanHistory": [{
       "action": "packed",
-      "scannedCode": "GX1234567890",
+      "scannedCode": "MW1234567890",
       "scannedBy": "admin_id",
       "scannedAt": "2024-05-22T10:30:00Z",
       "note": "Package verified"

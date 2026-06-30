@@ -141,7 +141,7 @@ export default function InvoiceModal({ order, isOpen, onClose, autoAction = null
                 {storeDetails.logo ? (
                   <img src={storeDetails.logo} alt={storeDetails.name} style={{ width: '58px', height: '58px', objectFit: 'contain' }} crossOrigin="anonymous" />
                 ) : (
-                  <div style={{ width: '58px', height: '58px', background: '#c8102e', color: 'white', borderRadius: '8px', display: 'grid', placeItems: 'center', fontWeight: 900, fontSize: '18px' }}>GX</div>
+                  <div style={{ width: '58px', height: '58px', background: '#c8102e', color: 'white', borderRadius: '8px', display: 'grid', placeItems: 'center', fontWeight: 900, fontSize: '18px' }}>MW</div>
                 )}
                 <div>
                   <h1 style={{ color: '#c8102e', fontSize: '28px', margin: '0 0 6px' }}>{storeDetails.name}</h1>

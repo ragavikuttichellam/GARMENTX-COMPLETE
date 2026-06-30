@@ -1,8 +1,16 @@
 const PDFDocument = require('pdfkit');
-const path = require('path');
 const http = require('http');
 const https = require('https');
 const { generateBarcodeBuffer, generateQrCodeBuffer } = require('./barcodeUtils');
+
+const INVOICE_TIMEZONE = 'Asia/Kolkata';
+
+const formatIstDate = (date) => new Intl.DateTimeFormat('en-IN', {
+  timeZone: INVOICE_TIMEZONE,
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+}).format(new Date(date));
 
 function fetchImageBuffer(url) {
   return new Promise((resolve, reject) => {
@@ -42,13 +50,13 @@ async function createInvoicePDF(order, options = {}) {
     doc.fontSize(20).text('TAX INVOICE', 380, 50, { align: 'right' });
 
     // Company
-    doc.fontSize(10).text(options.companyName || 'GarmentX Pvt Ltd', 40, 130);
+    doc.fontSize(10).text(options.companyName || 'Manisara World Pvt Ltd', 40, 130);
     doc.text(options.companyAddress || '123 Fashion Street, Mumbai, India');
     doc.moveDown();
 
     // Invoice meta
     doc.fontSize(10).text(`Invoice #: ${order.invoiceNumber || order.orderNumber}`, 380, 130, { align: 'right' });
-    doc.text(`Date: ${new Date(order.createdAt).toLocaleDateString()}`, { align: 'right' });
+    doc.text(`Date: ${formatIstDate(order.createdAt || new Date())}`, { align: 'right' });
 
     // Billing / Shipping
     const ship = order.shippingAddress || {};
@@ -134,7 +142,7 @@ async function createInvoicePDF(order, options = {}) {
     }
 
     // Footer
-    doc.fontSize(10).text(options.footerMessage || 'Thanks for shopping with GarmentX!', 40, 760, { align: 'center', width: 520 });
+    doc.fontSize(10).text(options.footerMessage || 'Thanks for shopping with Manisara World!', 40, 760, { align: 'center', width: 520 });
 
   } catch (err) {
     console.error('[INVOICE] generation error', err);

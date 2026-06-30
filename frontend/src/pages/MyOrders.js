@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { orderAPI } from '../utils/api';
 import { FiPackage, FiChevronRight, FiClock, FiTruck, FiCheckCircle, FiXCircle } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 
@@ -25,7 +25,7 @@ export default function MyOrders() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('/api/orders/myorders')
+    orderAPI.getMyOrders()
       .then(({ data }) => setOrders(data.orders || []))
       .catch(() => toast.error('Failed to load orders'))
       .finally(() => setLoading(false));
@@ -42,7 +42,7 @@ export default function MyOrders() {
       <div className="container" style={{ padding: '40px 24px', maxWidth: '900px' }}>
         <div style={{ marginBottom: '32px' }}>
           <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: '36px', color: '#1A1A2E', marginBottom: '8px' }}>My Orders</h1>
-          <p style={{ color: '#6B7280' }}>Track and manage all your GarmentX orders</p>
+          <p style={{ color: '#6B7280' }}>Track and manage all your Manisara World orders</p>
         </div>
 
         {orders.length === 0 ? (
@@ -65,7 +65,7 @@ export default function MyOrders() {
                     <div>
                       <p style={{ fontSize: '13px', color: '#9CA3AF', marginBottom: '4px' }}>Order #{order.orderNumber}</p>
                       <p style={{ fontSize: '13px', color: '#6B7280' }}>
-                        {new Date(order.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
+                        {new Date(order.createdAt).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata', day: 'numeric', month: 'long', year: 'numeric' })}
                       </p>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
@@ -112,7 +112,7 @@ export default function MyOrders() {
                   <div style={{ padding: '16px 24px', background: '#F9FAFB', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                     <div style={{ fontSize: '13px', color: '#6B7280' }}>
                       {order.isPaid ? '✓ Paid' : '⏳ Payment Pending'} •
-                      {order.isDelivered ? ` Delivered ${new Date(order.deliveredAt).toLocaleDateString('en-IN')}` : ' Delivery Pending'}
+                      {order.isDelivered ? ` Delivered ${new Date(order.deliveredAt).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}` : ' Delivery Pending'}
                     </div>
                     <Link to={'/order/' + order._id} style={{ color: '#C8102E', fontWeight: 600, fontSize: '14px', display: 'flex', alignItems: 'center', gap: '4px' }}>
                       View Details <FiChevronRight size={14} />

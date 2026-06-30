@@ -12,7 +12,7 @@ async function createShippingLabelPDF(order, options = {}) {
   const tracking = courier.trackingId || courier.awbNumber || order.packageId || order.orderNumber;
 
   try {
-    doc.fontSize(16).font('Helvetica-Bold').text(options.companyName || 'GarmentX', 18, 18);
+    doc.fontSize(16).font('Helvetica-Bold').text(options.companyName || 'Manisara World', 18, 18);
     doc.fontSize(9).font('Helvetica').text('Shipping Label', 18, 38);
     doc.moveTo(18, 56).lineTo(270, 56).stroke();
 

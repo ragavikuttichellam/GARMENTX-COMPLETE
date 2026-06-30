@@ -354,7 +354,7 @@ frontend/
 ├── public/
 │   └── index.html (updated)
 │
-garmentx/
+Manisara World/
 ├── WHATSAPP_INTEGRATION_GUIDE.md
 ├── WHATSAPP_QUICK_START.md
 ├── WHATSAPP_API_REFERENCE.md
@@ -505,7 +505,7 @@ Update these in `whatsappUtils.js`:
 
 ```javascript
 const WHATSAPP_NUMBER = "+91XXXXXXXXXX";  // Your WhatsApp Business number
-const COMPANY_NAME = "GarmentX";           // Your company name
+const COMPANY_NAME = "Manisara World";           // Your company name
 ```
 
 ---

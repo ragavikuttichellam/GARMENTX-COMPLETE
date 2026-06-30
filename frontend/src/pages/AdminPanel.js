@@ -1,20 +1,21 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
+import api, { adminAPI } from '../utils/api';
 import toast from 'react-hot-toast';
-import { FiPlus, FiEdit2, FiTrash2, FiPackage, FiUsers, FiDollarSign, FiShoppingBag, FiX, FiSave, FiRefreshCw } from 'react-icons/fi';
+import { FiPlus, FiEdit2, FiTrash2, FiX, FiSave } from 'react-icons/fi';
+import AdminDashboard from '../components/admin/AdminDashboard';
+import AdminOrders from '../components/admin/AdminOrders';
 
 const TABS = ['Dashboard', 'Products', 'Orders', 'Users'];
 
 const EMPTY_PRODUCT = {
   name: '', description: '', price: '', originalPrice: '',
-  category: 'men', subCategory: '', brand: 'GarmentX',
+  category: 'men', subCategory: '', brand: 'Manisara World',
   images: [''], sizes: '', colors: '', stock: '',
   isFeatured: false, isNewArrival: false, isOnOffer: false, discount: 0,
 };
 
 export default function AdminPanel() {
   const [activeTab, setActiveTab] = useState('Dashboard');
-  const [stats, setStats] = useState({});
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [users, setUsers] = useState([]);
@@ -23,17 +24,10 @@ export default function AdminPanel() {
   const [editProduct, setEditProduct] = useState(null);
   const [form, setForm] = useState(EMPTY_PRODUCT);
 
-  const fetchStats = useCallback(async () => {
-    try {
-      const { data } = await axios.get('/api/admin/stats');
-      if (data.success) setStats(data.stats);
-    } catch (e) { console.error(e); }
-  }, []);
-
   const fetchProducts = useCallback(async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get('/api/products?limit=100');
+      const { data } = await api.get('/products', { params: { limit: 100 } });
       setProducts(data.products || []);
     } catch (e) { toast.error('Failed to load products'); }
     finally { setLoading(false); }
@@ -42,7 +36,7 @@ export default function AdminPanel() {
   const fetchOrders = useCallback(async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get('/api/admin/orders');
+      const { data } = await adminAPI.getAllOrders();
       setOrders(data.orders || []);
     } catch (e) { toast.error('Failed to load orders'); }
     finally { setLoading(false); }
@@ -51,18 +45,17 @@ export default function AdminPanel() {
   const fetchUsers = useCallback(async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get('/api/admin/users');
+      const { data } = await adminAPI.getAllUsers();
       setUsers(data.users || []);
     } catch (e) { toast.error('Failed to load users'); }
     finally { setLoading(false); }
   }, []);
 
   useEffect(() => {
-    fetchStats();
     if (activeTab === 'Products') fetchProducts();
     if (activeTab === 'Orders') fetchOrders();
     if (activeTab === 'Users') fetchUsers();
-  }, [activeTab, fetchStats, fetchProducts, fetchOrders, fetchUsers]);
+  }, [activeTab, fetchProducts, fetchOrders, fetchUsers]);
 
   const openModal = (product = null) => {
     if (product) {
@@ -93,10 +86,10 @@ export default function AdminPanel() {
     };
     try {
       if (editProduct) {
-        await axios.put('/api/products/' + editProduct._id, payload);
+        await api.put('/products/' + editProduct._id, payload);
         toast.success('Product updated!');
       } else {
-        await axios.post('/api/products', payload);
+        await api.post('/products', payload);
         toast.success('Product created!');
       }
       setShowModal(false);
@@ -109,26 +102,11 @@ export default function AdminPanel() {
   const handleDelete = async (id, name) => {
     if (!window.confirm(`Delete "${name}"?`)) return;
     try {
-      await axios.delete('/api/products/' + id);
+      await api.delete('/products/' + id);
       toast.success('Product deleted');
       fetchProducts();
     } catch { toast.error('Delete failed'); }
   };
-
-  const updateOrderStatus = async (orderId, status) => {
-    try {
-      await axios.put('/api/orders/' + orderId + '/status', { status });
-      toast.success('Order status updated');
-      fetchOrders();
-    } catch { toast.error('Update failed'); }
-  };
-
-  const statCards = [
-    { icon: <FiShoppingBag size={24} />, label: 'Total Products', value: stats.totalProducts || 0, color: '#C8102E' },
-    { icon: <FiPackage size={24} />, label: 'Total Orders', value: stats.totalOrders || 0, color: '#3B82F6' },
-    { icon: <FiUsers size={24} />, label: 'Customers', value: stats.totalUsers || 0, color: '#10B981' },
-    { icon: <FiDollarSign size={24} />, label: 'Revenue', value: `₹${Number(stats.totalRevenue || 0).toLocaleString('en-IN')}`, color: '#FFB800' },
-  ];
 
   return (
     <div style={{ paddingTop: '80px', minHeight: '100vh', background: '#F9FAFB' }}>
@@ -136,7 +114,7 @@ export default function AdminPanel() {
         {/* Header */}
         <div style={{ marginBottom: '32px' }}>
           <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: '36px', color: '#1A1A2E', marginBottom: '8px' }}>Admin Panel</h1>
-          <p style={{ color: '#6B7280' }}>Manage your GarmentX store</p>
+          <p style={{ color: '#6B7280' }}>Manage your Manisara World store</p>
         </div>
 
         {/* Tabs */}
@@ -155,31 +133,7 @@ export default function AdminPanel() {
         {/* Dashboard */}
         {activeTab === 'Dashboard' && (
           <div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '20px', marginBottom: '40px' }}>
-              {statCards.map((s, i) => (
-                <div key={i} style={{ background: 'white', borderRadius: '20px', padding: '24px', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
-                  <div style={{ width: '48px', height: '48px', background: s.color + '15', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: s.color, marginBottom: '16px' }}>
-                    {s.icon}
-                  </div>
-                  <p style={{ fontSize: '28px', fontWeight: 800, color: '#1A1A2E', marginBottom: '4px' }}>{s.value}</p>
-                  <p style={{ color: '#9CA3AF', fontSize: '14px' }}>{s.label}</p>
-                </div>
-              ))}
-            </div>
-            <div style={{ background: 'white', borderRadius: '20px', padding: '24px', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
-              <h2 style={{ fontFamily: "'Playfair Display', serif", marginBottom: '16px' }}>Quick Actions</h2>
-              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                <button onClick={() => { setActiveTab('Products'); setTimeout(() => openModal(), 100); }} style={{ padding: '12px 20px', background: '#C8102E', color: 'white', border: 'none', borderRadius: '12px', cursor: 'pointer', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px', fontFamily: "'DM Sans', sans-serif" }}>
-                  <FiPlus size={16} /> Add Product
-                </button>
-                <button onClick={() => setActiveTab('Orders')} style={{ padding: '12px 20px', background: '#F3F4F6', color: '#1A1A2E', border: 'none', borderRadius: '12px', cursor: 'pointer', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px', fontFamily: "'DM Sans', sans-serif" }}>
-                  <FiPackage size={16} /> View Orders
-                </button>
-                <button onClick={fetchStats} style={{ padding: '12px 20px', background: '#F3F4F6', color: '#1A1A2E', border: 'none', borderRadius: '12px', cursor: 'pointer', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '8px', fontFamily: "'DM Sans', sans-serif" }}>
-                  <FiRefreshCw size={16} /> Refresh Stats
-                </button>
-              </div>
-            </div>
+            <AdminDashboard />
           </div>
         )}
 
@@ -245,51 +199,7 @@ export default function AdminPanel() {
         {activeTab === 'Orders' && (
           <div>
             <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '24px', marginBottom: '20px' }}>Orders ({orders.length})</h2>
-            {loading ? <p style={{ textAlign: 'center', color: '#6B7280', padding: '40px' }}>Loading...</p> : (
-              <div style={{ background: 'white', borderRadius: '20px', boxShadow: '0 2px 12px rgba(0,0,0,0.06)', overflow: 'hidden' }}>
-                <div style={{ overflowX: 'auto' }}>
-                  <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                    <thead>
-                      <tr style={{ background: '#F9FAFB', borderBottom: '1px solid #F0F0F0' }}>
-                        {['Order #', 'Customer', 'Items', 'Total', 'Status', 'Date', 'Update'].map(h => (
-                          <th key={h} style={{ padding: '14px 20px', textAlign: 'left', fontSize: '13px', fontWeight: 600, color: '#6B7280', textTransform: 'uppercase', letterSpacing: '0.5px', whiteSpace: 'nowrap' }}>{h}</th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {orders.map(o => (
-                        <tr key={o._id} style={{ borderBottom: '1px solid #F9FAFB' }}>
-                          <td style={{ padding: '14px 20px', fontSize: '13px', fontWeight: 600 }}>{o.orderNumber}</td>
-                          <td style={{ padding: '14px 20px' }}>
-                            <p style={{ fontSize: '14px', fontWeight: 600 }}>{o.user?.name}</p>
-                            <p style={{ fontSize: '12px', color: '#9CA3AF' }}>{o.user?.email}</p>
-                          </td>
-                          <td style={{ padding: '14px 20px', fontSize: '14px' }}>{o.orderItems?.length}</td>
-                          <td style={{ padding: '14px 20px', fontWeight: 700, color: '#C8102E' }}>₹{o.totalPrice?.toLocaleString('en-IN')}</td>
-                          <td style={{ padding: '14px 20px' }}>
-                            <span style={{ padding: '4px 10px', background: '#F3F4F6', borderRadius: '8px', fontSize: '12px', fontWeight: 600, textTransform: 'capitalize' }}>{o.status}</span>
-                          </td>
-                          <td style={{ padding: '14px 20px', fontSize: '13px', color: '#6B7280' }}>
-                            {new Date(o.createdAt).toLocaleDateString('en-IN')}
-                          </td>
-                          <td style={{ padding: '14px 20px' }}>
-                            <select
-                              value={o.status}
-                              onChange={(e) => updateOrderStatus(o._id, e.target.value)}
-                              style={{ padding: '7px 10px', borderRadius: '8px', border: '1px solid #E5E7EB', fontSize: '13px', cursor: 'pointer', fontFamily: "'DM Sans', sans-serif" }}
-                            >
-                              {['pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled'].map(s => (
-                                <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>
-                              ))}
-                            </select>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            )}
+            <AdminOrders orders={orders} loading={loading} />
           </div>
         )}
 
@@ -320,7 +230,7 @@ export default function AdminPanel() {
                         </td>
                         <td style={{ padding: '14px 20px', color: '#6B7280', fontSize: '14px' }}>{u.email}</td>
                         <td style={{ padding: '14px 20px', color: '#6B7280', fontSize: '14px' }}>{u.phone || '—'}</td>
-                        <td style={{ padding: '14px 20px', color: '#6B7280', fontSize: '13px' }}>{new Date(u.createdAt).toLocaleDateString('en-IN')}</td>
+                        <td style={{ padding: '14px 20px', color: '#6B7280', fontSize: '13px' }}>{new Date(u.createdAt).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}</td>
                         <td style={{ padding: '14px 20px' }}>
                           <span style={{ padding: '4px 10px', background: u.role === 'admin' ? '#FEF2F2' : '#F3F4F6', color: u.role === 'admin' ? '#C8102E' : '#6B7280', borderRadius: '8px', fontSize: '12px', fontWeight: 600, textTransform: 'capitalize' }}>{u.role}</span>
                         </td>

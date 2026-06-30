@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../utils/api';
 import { FiShoppingBag, FiZap, FiStar, FiTruck, FiRefreshCw, FiShield, FiChevronRight } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
 import toast from 'react-hot-toast';
@@ -17,7 +17,7 @@ export default function ProductDetail() {
   const [mainImg, setMainImg] = useState(0);
 
   useEffect(() => {
-    axios.get('/api/products/' + id)
+    api.get('/products/' + id)
       .then(({ data }) => {
         setProduct(data.product);
         setSelectedSize(data.product.sizes?.[0] || '');

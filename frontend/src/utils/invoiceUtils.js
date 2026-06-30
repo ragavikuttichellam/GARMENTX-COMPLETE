@@ -1,6 +1,8 @@
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
+export const APP_TIMEZONE = 'Asia/Kolkata';
+
 /**
  * Generate Invoice PDF from HTML element
  * @param {HTMLElement} element - Element to convert to PDF
@@ -78,6 +80,7 @@ export const formatCurrency = (amount) => {
  */
 export const formatDate = (dateString) => {
   return new Date(dateString).toLocaleDateString('en-IN', {
+    timeZone: APP_TIMEZONE,
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -115,12 +118,12 @@ export const generateQRCodeData = (order) => {
  */
 export const getStoreDetails = () => {
   return {
-    name: process.env.REACT_APP_STORE_NAME || 'GarmentX',
+    name: process.env.REACT_APP_STORE_NAME || 'Manisara World',
     logo: process.env.REACT_APP_STORE_LOGO || '',
     address: process.env.REACT_APP_STORE_ADDRESS || '123 Fashion Street, Mumbai',
     phone: process.env.REACT_APP_STORE_PHONE || '+91-1234567890',
-    email: process.env.REACT_APP_STORE_EMAIL || 'support@garmentx.com',
-    website: process.env.REACT_APP_STORE_WEBSITE || 'www.garmentx.com',
+    email: process.env.REACT_APP_STORE_EMAIL || 'support@manisaraworld.com',
+    website: process.env.REACT_APP_STORE_WEBSITE || 'www.manisaraworld.com',
     gstNumber: process.env.REACT_APP_GST_NUMBER || 'GST12AB3456C789DE',
   };
 };

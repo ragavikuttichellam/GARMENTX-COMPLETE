@@ -6,8 +6,12 @@ const Product = require('../models/Product');
 const Order = require('../models/Order');
 
 async function run() {
-  await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/garment');
-  const user = await User.findOne({ email: 'admin@garment.com' }) || await User.findOne();
+  if (!process.env.MONGODB_URI) {
+    throw new Error('MONGODB_URI is required. Refusing to create a test order without an explicit database connection string.');
+  }
+
+  await mongoose.connect(process.env.MONGODB_URI);
+  const user = await User.findOne({ email: 'admin@manisaraworld.com' }) || await User.findOne();
   const product = await Product.findOne();
   if (!user || !product) {
     console.error('Need at least one user and one product seeded. Run seedData.js first.');

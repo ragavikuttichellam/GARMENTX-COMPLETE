@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../utils/api';
 import toast from 'react-hot-toast';
 import { FiLock, FiCreditCard } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
@@ -31,12 +31,12 @@ export default function Checkout() {
         shippingAddress: form,
         paymentMethod: 'razorpay'
       };
-      const { data: orderRes } = await axios.post('/api/orders', orderData);
+      const { data: orderRes } = await api.post('/orders', orderData);
       if (!orderRes.success) return toast.error('Failed to create order');
       const order = orderRes.order;
 
       // 2. Create Razorpay order
-      const { data: payRes } = await axios.post('/api/payment/razorpay', { orderId: order._id });
+      const { data: payRes } = await api.post('/payment/razorpay', { orderId: order._id });
       if (!payRes.success) return toast.error('Payment init failed');
 
       // 3. Open Razorpay
@@ -44,12 +44,12 @@ export default function Checkout() {
         key: payRes.key,
         amount: payRes.razorpayOrder.amount,
         currency: 'INR',
-        name: 'GarmentX',
+        name: 'Manisara World',
         description: 'Fashion Purchase',
         order_id: payRes.razorpayOrder.id,
         handler: async (response) => {
           try {
-            const { data: verifyRes } = await axios.post('/api/payment/verify', {
+            const { data: verifyRes } = await api.post('/payment/verify', {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,

@@ -150,14 +150,14 @@ export default function InvoiceDetails({ order, onRefresh }) {
               Order Date
             </p>
             <p style={{ fontWeight: 600, color: '#1A1A2E', marginBottom: '16px' }}>
-              {new Date(order.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
+              {new Date(order.createdAt).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata', day: 'numeric', month: 'long', year: 'numeric' })}
             </p>
 
             <p style={{ fontSize: '12px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 700, marginBottom: '4px' }}>
               Payment Status
             </p>
             <p style={{ fontWeight: 600, color: order.isPaid ? '#10B981' : '#F97316', marginBottom: '16px' }}>
-              {order.isPaid ? '✓ Paid' : '⏳ Pending'} {order.paidAt && `on ${new Date(order.paidAt).toLocaleDateString('en-IN')}`}
+              {order.isPaid ? '✓ Paid' : '⏳ Pending'} {order.paidAt && `on ${new Date(order.paidAt).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}`}
             </p>
           </div>
 
@@ -167,7 +167,7 @@ export default function InvoiceDetails({ order, onRefresh }) {
               Delivery Status
             </p>
             <p style={{ fontWeight: 600, color: order.isDelivered ? '#10B981' : '#F97316', marginBottom: '16px' }}>
-              {order.isDelivered ? '✓ Delivered' : '⏳ Pending'} {order.deliveredAt && `on ${new Date(order.deliveredAt).toLocaleDateString('en-IN')}`}
+              {order.isDelivered ? '✓ Delivered' : '⏳ Pending'} {order.deliveredAt && `on ${new Date(order.deliveredAt).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}`}
             </p>
 
             <p style={{ fontSize: '12px', color: '#9CA3AF', textTransform: 'uppercase', fontWeight: 700, marginBottom: '4px' }}>

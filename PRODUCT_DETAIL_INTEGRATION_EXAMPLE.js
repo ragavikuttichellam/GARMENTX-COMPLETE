@@ -50,14 +50,14 @@ export default function ProductDetail() {
           const productImage = product.images?.[0] || 'https://via.placeholder.com/1200x630';
 
           // Update meta tags
-          document.title = `${product.name} | GarmentX`;
+          document.title = `${product.name} | Manisara World`;
           
           // Update OG tags for WhatsApp sharing
           updateMetaTag('property', 'og:title', product.name);
           updateMetaTag('property', 'og:description', product.description || `${product.name} - ₹${product.price}`);
           updateMetaTag('property', 'og:image', productImage);
           updateMetaTag('property', 'og:url', productUrl);
-          updateMetaTag('name', 'description', product.description || `Shop ${product.name} on GarmentX`);
+          updateMetaTag('name', 'description', product.description || `Shop ${product.name} on Manisara World`);
         }
       })
       .catch(() => toast.error('Product not found'))

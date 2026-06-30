@@ -18,14 +18,14 @@ npm install
 
 Create `.env` file:
 ```
-MONGODB_URI=mongodb://localhost:27017/garment
+MONGODB_URI=mongodb://localhost:27017/Manisara World
 JWT_SECRET=your-super-secret-key-here-min-32-chars
 PORT=5000
 FRONTEND_URL=http://localhost:3000
 NODE_ENV=development
-COMPANY_NAME=GarmentX Pvt Ltd
+COMPANY_NAME=Manisara World Pvt Ltd
 COMPANY_ADDRESS=123 Fashion Street, Mumbai
-INVOICE_FOOTER=Thank you for shopping with GarmentX!
+INVOICE_FOOTER=Thank you for shopping with Manisara World!
 ```
 
 #### 2. Frontend Setup
@@ -134,9 +134,9 @@ node scripts/createAdmin.js
 3. Order status updated instantly
 
 ### Supported Codes
-- Order Number: `GX1234567890`
-- Invoice Number: `INV-GX1234567890`
-- Package ID: `PKG-GX1234567890`
+- Order Number: `MW1234567890`
+- Invoice Number: `INV-MW1234567890`
+- Package ID: `PKG-MW1234567890`
 - Tracking ID: `1Z999AA10123456784`
 - AWB Number: `DHL2024001234`
 - QR Code: Any QR encoding above codes

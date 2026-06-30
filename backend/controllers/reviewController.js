@@ -1,10 +1,32 @@
+const mongoose = require('mongoose');
 const Review = require('../models/Review');
 const Product = require('../models/Product');
 const Order = require('../models/Order');
 const cloudinary = require('../config/cloudinary');
 
+const sentimentAnalysis = (text = '') => {
+  const lower = text.toLowerCase();
+  const positiveKeywords = ['excellent', 'great', 'perfect', 'best', 'love', 'amazing', 'fantastic', 'recommend', 'awesome', 'happy'];
+  const negativeKeywords = ['bad', 'terrible', 'worst', 'poor', 'disappointed', 'refund', 'broken', 'hate', 'slow', 'problem'];
+  let score = 0;
+  positiveKeywords.forEach(word => { if (lower.includes(word)) score += 1; });
+  negativeKeywords.forEach(word => { if (lower.includes(word)) score -= 1; });
+  if (score > 0) return 'positive';
+  if (score < 0) return 'negative';
+  return 'neutral';
+};
+
+const updateProductStats = async (productId) => {
+  const agg = await Review.aggregate([
+    { $match: { productId: mongoose.Types.ObjectId(productId), status: 'published' } },
+    { $group: { _id: '$productId', avgRating: { $avg: '$rating' }, count: { $sum: 1 } } }
+  ]);
+  const stats = agg[0] || { avgRating: 0, count: 0 };
+  await Product.findByIdAndUpdate(productId, { rating: stats.avgRating || 0, numReviews: stats.count || 0 });
+};
+
 // helper to upload buffers to Cloudinary
-const uploadBuffer = (buffer, folder = 'garmentx/reviews') => new Promise((resolve, reject) => {
+const uploadBuffer = (buffer, folder = 'Manisara World/reviews') => new Promise((resolve, reject) => {
   const stream = cloudinary.uploader.upload_stream({ folder }, (error, result) => {
     if (error) return reject(error);
     resolve(result);
@@ -37,16 +59,17 @@ exports.addReview = async (req, res) => {
     }
 
     const verifiedPurchase = !!purchased;
-    const review = await Review.create({ userId, productId, rating: r, comment, images, verifiedPurchase });
+    const review = await Review.create({
+      userId,
+      productId,
+      rating: r,
+      comment,
+      sentiment: sentimentAnalysis(comment),
+      images,
+      verifiedPurchase
+    });
 
-    // update product aggregate (numReviews, rating)
-    const agg = await Review.aggregate([
-      { $match: { productId: review.productId } },
-      { $group: { _id: '$productId', avgRating: { $avg: '$rating' }, count: { $sum: 1 } } }
-    ]);
-    const stats = agg[0] || { avgRating: 0, count: 0 };
-    await Product.findByIdAndUpdate(review.productId, { rating: stats.avgRating, numReviews: stats.count });
-
+    await updateProductStats(review.productId);
     res.status(201).json({ success: true, review });
   } catch (err) {
     console.error(err);
@@ -63,9 +86,10 @@ exports.getReviewsByProduct = async (req, res) => {
     if (sort === 'highest') sortQuery = { rating: -1 };
     if (sort === 'lowest') sortQuery = { rating: 1 };
 
+    const query = { productId, status: 'published' };
     const [reviews, total] = await Promise.all([
-      Review.find({ productId }).populate('userId', 'name avatar').sort(sortQuery).skip(skip).limit(Number(limit)),
-      Review.countDocuments({ productId })
+      Review.find(query).populate('userId', 'name avatar').sort(sortQuery).skip(skip).limit(Number(limit)),
+      Review.countDocuments(query)
     ]);
     res.json({ success: true, reviews, total, page: Number(page), pages: Math.ceil(total / Number(limit)) });
   } catch (err) {
@@ -88,7 +112,10 @@ exports.updateReview = async (req, res) => {
       if (!r || r < 1 || r > 5) return res.status(400).json({ success: false, message: 'Invalid rating' });
       review.rating = r;
     }
-    if (comment !== undefined) review.comment = comment;
+    if (comment !== undefined) {
+      review.comment = comment;
+      review.sentiment = sentimentAnalysis(comment);
+    }
 
     // remove images if requested
     if (removeImageIds && Array.isArray(removeImageIds)) {
@@ -109,16 +136,9 @@ exports.updateReview = async (req, res) => {
       }
     }
 
+    review.sentiment = sentimentAnalysis(review.comment);
     await review.save();
-
-    // recompute product stats
-    const agg = await Review.aggregate([
-      { $match: { productId: review.productId } },
-      { $group: { _id: '$productId', avgRating: { $avg: '$rating' }, count: { $sum: 1 } } }
-    ]);
-    const stats = agg[0] || { avgRating: 0, count: 0 };
-    await Product.findByIdAndUpdate(review.productId, { rating: stats.avgRating, numReviews: stats.count });
-
+    await updateProductStats(review.productId);
     res.json({ success: true, review });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
@@ -140,15 +160,7 @@ exports.deleteReview = async (req, res) => {
     }
 
     await review.remove();
-
-    // recompute stats
-    const agg = await Review.aggregate([
-      { $match: { productId: review.productId } },
-      { $group: { _id: '$productId', avgRating: { $avg: '$rating' }, count: { $sum: 1 } } }
-    ]);
-    const stats = agg[0] || { avgRating: 0, count: 0 };
-    await Product.findByIdAndUpdate(review.productId, { rating: stats.avgRating || 0, numReviews: stats.count || 0 });
-
+    await updateProductStats(review.productId);
     res.json({ success: true, message: 'Review deleted' });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
@@ -159,7 +171,7 @@ exports.getAverage = async (req, res) => {
   try {
     const productId = req.params.productId;
     const agg = await Review.aggregate([
-      { $match: { productId: require('mongoose').Types.ObjectId(productId) } },
+      { $match: { productId: require('mongoose').Types.ObjectId(productId), status: 'published' } },
       { $group: { _id: '$productId', avgRating: { $avg: '$rating' }, count: { $sum: 1 }, breakdown: { $push: '$rating' } } }
     ]);
     const data = agg[0] || { avgRating: 0, count: 0 };
@@ -184,6 +196,72 @@ exports.adminList = async (req, res) => {
       Review.countDocuments()
     ]);
     res.json({ success: true, reviews, total, page: Number(page), pages: Math.ceil(total/Number(limit)) });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+exports.adminAnalytics = async (req, res) => {
+  try {
+    const [stats, reported, topProducts] = await Promise.all([
+      Review.aggregate([
+        { $match: {} },
+        { $group: {
+          _id: null,
+          total: { $sum: 1 },
+          published: { $sum: { $cond: [{ $eq: ['$status', 'published'] }, 1, 0] } },
+          removed: { $sum: { $cond: [{ $eq: ['$status', 'removed'] }, 1, 0] } },
+          avgRating: { $avg: '$rating' }
+        } }
+      ]),
+      Review.countDocuments({ reports: { $exists: true, $not: { $size: 0 } } }),
+      Review.aggregate([
+        { $match: {} },
+        { $group: { _id: '$productId', reports: { $sum: { $size: '$reports' } }, reviews: { $sum: 1 } } },
+        { $sort: { reports: -1, reviews: -1 } },
+        { $limit: 5 },
+        { $lookup: { from: 'products', localField: '_id', foreignField: '_id', as: 'product' } },
+        { $unwind: { path: '$product', preserveNullAndEmptyArrays: true } },
+        { $project: { productName: '$product.name', reports: 1, reviews: 1 } }
+      ])
+    ]);
+    const summary = stats[0] || { total: 0, published: 0, removed: 0, avgRating: 0 };
+    res.json({ success: true, analytics: { totalReviews: summary.total, published: summary.published, removed: summary.removed, avgRating: summary.avgRating || 0, reportedReviews: reported, topReportedProducts: topProducts } });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+exports.replyReview = async (req, res) => {
+  try {
+    const review = await Review.findById(req.params.id);
+    if (!review) return res.status(404).json({ success: false, message: 'Review not found' });
+    const { text } = req.body;
+    if (!text) return res.status(400).json({ success: false, message: 'Reply text is required' });
+    review.adminReply = {
+      text,
+      adminId: req.user._id,
+      createdAt: new Date()
+    };
+    await review.save();
+    res.json({ success: true, review });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+exports.moderateReview = async (req, res) => {
+  try {
+    const review = await Review.findById(req.params.id);
+    if (!review) return res.status(404).json({ success: false, message: 'Review not found' });
+    const status = req.body.status;
+    if (!['published', 'pending', 'removed'].includes(status)) {
+      return res.status(400).json({ success: false, message: 'Invalid status' });
+    }
+    review.status = status;
+    await review.save();
+    await updateProductStats(review.productId);
+    res.json({ success: true, review });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }

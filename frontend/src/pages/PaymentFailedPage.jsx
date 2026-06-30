@@ -80,8 +80,8 @@ const PaymentFailedPage = () => {
           <div className="space-y-3 text-sm text-gray-700">
             <p>
               <span className="font-semibold">Contact Support:</span>{' '}
-              <a href="mailto:support@garmentx.com" className="text-pink-500 hover:text-pink-600 font-semibold">
-                support@garmentx.com
+              <a href="mailto:support@manisaraworld.com" className="text-pink-500 hover:text-pink-600 font-semibold">
+                support@manisaraworld.com
               </a>
             </p>
             <p>

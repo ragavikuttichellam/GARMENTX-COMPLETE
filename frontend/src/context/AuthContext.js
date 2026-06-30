@@ -1,16 +1,16 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../utils/api';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem('garmentx_token'));
+  const [token, setToken] = useState(localStorage.getItem('manisara_world_token'));
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       fetchProfile();
     } else {
       setLoading(false);
@@ -19,17 +19,17 @@ export const AuthProvider = ({ children }) => {
 
   const fetchProfile = async () => {
     try {
-      const { data } = await axios.get('/api/auth/profile');
+      const { data } = await api.get('/auth/profile');
       if (data.success) setUser(data.user);
     } catch { logout(); }
     finally { setLoading(false); }
   };
 
   const login = async (email, password) => {
-    const { data } = await axios.post('/api/auth/login', { email, password });
+    const { data } = await api.post('/auth/login', { email, password });
     if (data.success) {
-      localStorage.setItem('garmentx_token', data.token);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+      localStorage.setItem('manisara_world_token', data.token);
+      api.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
       setToken(data.token);
       setUser(data.user);
     }
@@ -37,10 +37,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (name, email, password, phone) => {
-    const { data } = await axios.post('/api/auth/register', { name, email, password, phone });
+    const { data } = await api.post('/auth/register', { name, email, password, phone });
     if (data.success) {
-      localStorage.setItem('garmentx_token', data.token);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
+      localStorage.setItem('manisara_world_token', data.token);
+      api.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
       setToken(data.token);
       setUser(data.user);
     }
@@ -48,8 +48,8 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem('garmentx_token');
-    delete axios.defaults.headers.common['Authorization'];
+    localStorage.removeItem('manisara_world_token');
+    delete api.defaults.headers.common['Authorization'];
     setToken(null);
     setUser(null);
   };

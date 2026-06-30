@@ -21,6 +21,9 @@ router.get('/average/:productId', reviewCtrl.getAverage);
 
 // Admin routes
 router.get('/admin/all', protect, adminOnly, reviewCtrl.adminList);
+router.get('/admin/analytics', protect, adminOnly, reviewCtrl.adminAnalytics);
+router.put('/reply/:id', protect, adminOnly, reviewCtrl.replyReview);
+router.put('/moderate/:id', protect, adminOnly, reviewCtrl.moderateReview);
 router.post('/:id/helpful', protect, reviewCtrl.helpful);
 router.post('/:id/report', protect, reviewCtrl.report);
 

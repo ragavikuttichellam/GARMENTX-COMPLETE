@@ -50,7 +50,7 @@ PUT    /api/orders/:id/status
 ```javascript
 {
   _id: ObjectId,
-  orderNumber: "GX1234567890",
+  orderNumber: "MW1234567890",
   status: "shipped",
   createdAt: "2024-05-26T...",
   totalPrice: 2999,

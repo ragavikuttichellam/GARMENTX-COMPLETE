@@ -13,7 +13,7 @@ const WishlistPage = () => {
   const { wishlist, removeFromWishlist, clearWishlist } = useWishlist();
 
   const handleAddToCart = (product) => {
-    const cart = JSON.parse(localStorage.getItem('garmentx_cart') || '[]');
+    const cart = JSON.parse(localStorage.getItem('manisara_world_cart') || '[]');
     const exists = cart.find(item => item._id === product._id);
     
     if (exists) {
@@ -27,7 +27,7 @@ const WishlistPage = () => {
       });
     }
     
-    localStorage.setItem('garmentx_cart', JSON.stringify(cart));
+    localStorage.setItem('manisara_world_cart', JSON.stringify(cart));
     removeFromWishlist(product._id);
     toast.success('Added to cart');
   };

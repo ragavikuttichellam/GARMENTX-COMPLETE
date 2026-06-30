@@ -50,7 +50,7 @@ export default function UserOrderCard({ order }) {
             Order #{order.orderNumber}
           </p>
           <p style={{ fontSize: '13px', color: '#6B7280' }}>
-            {new Date(order.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
+            {new Date(order.createdAt).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata', day: 'numeric', month: 'long', year: 'numeric' })}
           </p>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
@@ -128,7 +128,7 @@ export default function UserOrderCard({ order }) {
       }}>
         <div style={{ fontSize: '13px', color: '#6B7280' }}>
           {order.isPaid ? '✓ Paid' : '⏳ Payment Pending'} •
-          {order.isDelivered ? ` Delivered ${new Date(order.deliveredAt).toLocaleDateString('en-IN')}` : ' Delivery Pending'}
+          {order.isDelivered ? ` Delivered ${new Date(order.deliveredAt).toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata' })}` : ' Delivery Pending'}
         </div>
         <Link
           to={'/order/' + order._id}
